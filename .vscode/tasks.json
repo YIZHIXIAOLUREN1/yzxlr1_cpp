@@ -1,0 +1,15 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compile",
+            "command": "g++",
+            "args": ["${file}", "-o", "${fileBasenameNoExtension}.exe"],
+        },
+        {
+            "label": "CompileO2",
+            "command": "g++",
+            "args": ["${file}", "-o", "${fileBasenameNoExtension}.exe", "-O2"],
+        }
+    ]
+}
