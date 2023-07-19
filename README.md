@@ -1,2 +1,2 @@
 # yzxlr1_cpp
-just savv my own code for OI.
+just save my own code for OI.
