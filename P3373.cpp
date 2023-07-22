@@ -86,6 +86,7 @@ void update1(int u,int L,int R,int l,int r,LL xh,LL xc){
 }
 
 int main(){
+	//ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     scanf("%d%d%d",&n,&m,&num[0]);
     for(int i=1;i<=n;i++)
         scanf("%d",&num[i]);

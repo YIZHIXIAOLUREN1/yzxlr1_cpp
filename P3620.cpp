@@ -1,31 +1,51 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define N 5005
+#define N 500007
+#define ll int
+#define inf 0x3f3f3f3f
+struct node{
+    int ty,l,r;ll s;
+   	friend bool operator < (const node x,const node y){
+        return x.s>y.s;
+    }
+}a[N];
+
 int n,k;
-int a[N];
-int f[N][N];
-int ans=0x6f6f6f6f;
+int vis[N];
+ll ans;
+priority_queue<node> q;
+
 int main(){
     ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
-    cin >> n >> k >> a[0];
+    cin >> n >> k >> a[0].s;
     n--;
     for(int i=1;i<=n;i++){
-        cin >> a[i];
+        cin >> a[i].s;
+        a[i].ty=i;
+        a[i].l=i-1;
+        a[i].r=i+1;
     }
     for(int i=n;i>=1;i--){
-    	a[i]-=a[i-1];
+    	a[i].s-=a[i-1].s;
+        q.push(a[i]);
     	//printf("%d:%d\n",i,a[i]);//
     }
-    memset(f,0x6f,sizeof f);
-    f[1][0]=0;f[1][1]=a[1];
-    for(int i=1;i<=n;i++){
-        for(int j=k;j>=0;j--){
-        	if(i>1)f[i][j]=min(f[i][j],f[i-1][j]);
-            if(j>0&&i>2)f[i][j]=min(f[i][j],f[i-2][j-1]+a[i]);
-            //printf("%d %d:%d\n",i,j,f[i][j]);//
-        }
-        ans=min(ans,f[i][k]);
+    a[0].s=a[n+1].s=inf;
+    while(k--){
+    	while(vis[q.top().ty])q.pop();
+        node u=q.top();
+        int v=u.ty;
+        u=a[v];
+        q.pop();
+        ans+=u.s;
+        vis[u.l]=vis[u.r]=1;
+        u.s=a[u.l].s+a[u.r].s-u.s;
+        u.l=a[u.l].l;
+        u.r=a[u.r].r;
+        a[u.r].l=v;
+        a[u.l].r=v;
+        a[v]=u;
+        q.push(a[v]);
     }
-
     cout << ans;
 }
