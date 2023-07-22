@@ -19,12 +19,10 @@ int main(){
     for(int k=1;k<=m;k++){
         int l=i+j-k;
         if(l<1||l>n)continue;
-        //if(i==k&&j==l&&!(i==n&&j==m&&k==n))continue;
         f[i][j][k]=ma(f[i-1][j][k-1],f[i][j-1][k-1],
         f[i-1][j][k],f[i][j-1][k]);
         f[i][j][k]+=a[i][j]+a[k][l];
         if(i==k&&j==l)f[i][j][k]-=a[i][j];
-        //printf("%d %d %d %d:%d\n",i,j,k,l,f[i][j][k]);//
     }
     cout << f[m][n][m];
 }
