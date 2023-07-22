@@ -12,7 +12,7 @@ vector <fl> fll[MAXN];
 int vis[MAXN];
 
 
-string sx[MAXN];//´¢´æ´ð°¸ 
+string sx[MAXN];//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 int sxi=0;
 
 bool cmp(fl a,fl b){
@@ -69,12 +69,12 @@ int main(){
 		fll[xc[0]-'a'].push_back(no);
 		frn[xc[0]-'a']++;
 		lan[xc[xc.size()-1]-'a']++;
-	}//ÊäÈë 
+	}//ï¿½ï¿½ï¿½ï¿½ 
 	
 	for(int i=0;i<26;i++){
 		if(!fll[i].empty())
 			sort(fll[i].begin(),fll[i].end(),cmp);
-	}//ÅÅÐò 
+	}//ï¿½ï¿½ï¿½ï¿½ 
 	/*
 	for(int i=0;i<26;i++){
 		//cout << i << " "<< !fl[i].empty();//
@@ -122,7 +122,7 @@ int main(){
 				}
 			}
 		}
-	}//³õ²½ÅÐ¶Ï½â²¢dfs
+	}//ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶Ï½â²¢dfs
 	
 	
 	cout << "***\n";

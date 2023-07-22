@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
-string jian(string a,int fir,int las){//¼õÈ¥[fir,las)
+string jian(string a,int fir,int las){//ï¿½ï¿½È¥[fir,las)
 	string ans=a.substr(0,fir);
 	ans+=a.substr(las,a.length()-las);
 	a=ans;
