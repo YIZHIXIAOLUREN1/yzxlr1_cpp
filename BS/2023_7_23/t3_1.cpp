@@ -4,6 +4,7 @@ using namespace std;
 //#define pr pair<int,ll>
 #define prr pair<int,pair<int,ll>>
 #define inf 0x3f3f3f3f3f3f3f3f
+#define db double
 inline int read(){
     int res=0,f=1;
     char ch=' ';
@@ -20,8 +21,7 @@ ll xs[N],ss[N],re[N],ans=inf;
 vector<int> G[N];
 
 bool cmp2(prr a,prr b){
-    if(a.second.first!=b.second.first)return a.second.first<b.second.first;
-    return a.second.second>b.second.second;
+    return a.second.second/(db)a.second.first>b.second.second/(db)b.second.first;
 }
 
 void dfs3(int u,int fa){
@@ -66,7 +66,7 @@ void dfs4(int u,int fa){
         p+=b[i].second.first;
     }
     ans=min(ans,re[u]);
-    printf("%d:%lld %lld %d %d\n",u,re[u],xs[u],s[u],num[u]);//
+    //printf("%d:%lld %lld %d %d\n",u,re[u],xs[u],s[u],num[u]);//
     for(auto v:G[u]){
         if(v==fa)continue;
         b.clear();
