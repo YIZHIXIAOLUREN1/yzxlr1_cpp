@@ -17,20 +17,12 @@ int ans;
 vector<int> p[N];
 
 void dfs(int u){
-	//printf("%d\n",u);//
     if(u==n+1){
-    	// for(int i=1;i<=u;i++){
-    		// for(int j=0;j<p[i].size();j++){
-        		// cout << p[i][j] << " \n"[j==p[i].size()-1];
-	        // }
-    	// }
-    	// cout << "e";
     	ans++;return;
     }
     for(int i=1;i<=u;i++){
     	if(p[i].size()==0){
     		p[i].push_back(u);
-    		//printf("ad%d:%d\n",i,u);//
     		dfs(u+1);
     		p[i].pop_back();
     		break;
@@ -39,7 +31,6 @@ void dfs(int u){
         for(int j=0;j<p[i].size();j++)ma=min(ma,a[p[i][j]]);
         if(ma>p[i].size()){
             p[i].push_back(u);
-            //printf("j%d:%d:%d\n",i,u,ma);//
             dfs(u+1);
             p[i].pop_back();
         }
@@ -55,7 +46,6 @@ int main(){
         if(tot>n)break;
     }
     for(int i=tot+1;i<=n;i++)a[i]=n;
-    //p[1].push_back(1);
     dfs(1);
     cout << ans%P;
 }
