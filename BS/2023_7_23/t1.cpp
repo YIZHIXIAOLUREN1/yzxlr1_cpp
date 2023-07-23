@@ -7,7 +7,8 @@ ll ans;
 int main(){
     cin >> p;
     p--;
-    for(ll i=1;i*i<=p;i++){
+    ll mp=sqrtl(p)+1;
+    for(ll i=1;i<=mp;i++){
         if(p%i==0){
             ans+=2;
             if(i*i==p)ans-=1;
