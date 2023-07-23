@@ -19,25 +19,25 @@ int num[N],s[N];
 ll xs[N],ss[N],re[N],ans=inf;
 vector<int> G[N];
 
-bool cmp(prr a,prr b){
+bool cmp2(prr a,prr b){
     if(a.second.first!=b.second.first)return a.second.first<b.second.first;
     return a.second.second>b.second.second;
 }
 
-void dfs1(int u,int fa){
+void dfs3(int u,int fa){
     num[u]=1;
     s[u]=a[u];
     vector<prr> b;
     b.clear();
     for(auto v:G[u]){
         if(v==fa)continue;
-        dfs1(v,u);
+        dfs3(v,u);
         num[u]+=num[v];
         s[u]+=s[v];
         b.push_back({v,{num[v],s[v]}});
     }
     if(fa!=0)b.push_back({fa,{n-num[u],ns-s[u]}});
-    sort(b.begin(),b.end(),cmp);
+    sort(b.begin(),b.end(),cmp2);
     ll p=1;
     xs[u]=a[u];
     for(int i=0;i<b.size();i++){
@@ -47,7 +47,7 @@ void dfs1(int u,int fa){
     }
 }
 
-void dfs2(int u,int fa){
+void dfs4(int u,int fa){
     vector<prr> b;
     b.clear();
     for(auto v:G[u]){
@@ -55,7 +55,7 @@ void dfs2(int u,int fa){
         b.push_back({v,{num[v],s[v]}});
     }
     if(fa!=0)b.push_back({fa,{n-num[u],ns-s[u]}});
-    sort(b.begin(),b.end(),cmp);
+    sort(b.begin(),b.end(),cmp2);
     ll p=1;
     re[u]=a[u];
     for(int i=0;i<b.size();i++){
@@ -66,7 +66,7 @@ void dfs2(int u,int fa){
         p+=b[i].second.first;
     }
     ans=min(ans,re[u]);
-    //printf("%d:%lld %lld %d %d\n",u,re[u],xs[u],s[u],num[u]);//
+    printf("%d:%lld %lld %d %d\n",u,re[u],xs[u],s[u],num[u]);//
     for(auto v:G[u]){
         if(v==fa)continue;
         b.clear();
@@ -75,7 +75,7 @@ void dfs2(int u,int fa){
             b.push_back({vv,{num[vv],s[vv]}});
         }
         if(fa!=0)b.push_back({fa,{n-num[u],ns-s[u]}});
-        sort(b.begin(),b.end(),cmp);
+        sort(b.begin(),b.end(),cmp2);
         p=1;
         ss[u]=a[u];
         for(int i=0;i<b.size();i++){
@@ -86,7 +86,7 @@ void dfs2(int u,int fa){
         p+=b[i].second.first;
         }
         //printf("%d %d:%lld\n",u,v,ss[u]);//
-        dfs2(v,u);
+        dfs4(v,u);
     }
 }
 
@@ -101,9 +101,9 @@ int main(){
         a[i]=read();
         ns+=a[i];
     }
-    dfs1(1,0);
+    dfs3(1,0);
     re[1]=xs[1];
     ans=min(ans,re[1]);
-    dfs2(1,0);
+    dfs4(1,0);
     cout << ans;
 }
