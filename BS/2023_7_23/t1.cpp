@@ -1,17 +1,17 @@
 #include<bits/stdc++.h>
 using namespace std;
-
-
-inline int read(){
-    int res=0,f=1;
-    char ch=' ';
-    while(ch!='-'&&(ch<'0'||ch>'9'))ch=getchar();
-    if(ch=='-')f=-1,ch=getchar();
-    while(ch>='0'&&ch<='9')res=res*10+ch-'0',ch=getchar();
-    return res*f;
-}
-
+#define ll long long
+ll p;
+ll ans;
 
 int main(){
-    
+    cin >> p;
+    p--;
+    for(ll i=1;i*i<=p;i++){
+        if(p%i==0){
+            ans+=2;
+            if(i*i==p)ans-=1;
+        }
+    }
+    cout << ans;
 }
