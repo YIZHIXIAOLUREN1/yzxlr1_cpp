@@ -10,3 +10,8 @@ inline int read(){
     while(ch>='0'&&ch<='9')res=res*10+ch-'0',ch=getchar();
     return res*f;
 }
+
+
+int main(){
+    
+}
