@@ -17,9 +17,8 @@ int main(){
 
     int rw=0,rp=0;
     for(int l=1;l<=n;l++){
-        while(rw<=n&&a[l]>b[rw+1])rw++;
-        rp=rw;
-        while(rp<=n&&a[l]==b[rp+1])rp++;
+        while(rw<n&&a[l]>b[rw+1])rw++;
+        while(rp<n&&a[l]>=b[rp+1])rp++;
         ana+=rw;
         anb+=n-rp;
     }
