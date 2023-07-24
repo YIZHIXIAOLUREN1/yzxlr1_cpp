@@ -15,7 +15,6 @@ int main(){
         string s;
         cin >> s;
         n=s.size();
-        //cout << n << "\n:";//
         int p=0,mp=0;tot=0;
         for(int i=0;i<s.size();i++){
             if(s[i]=='0')p++;
@@ -30,7 +29,6 @@ int main(){
         for(int mi=1;mi<=mn;mi++){
             int len=0,np=0;
             for(int i=1;i<=tot;i++){
-            	//printf("%d %d:%d %d\n",mi,a[i],len,np);//
             	np+=a[i];
                 if(a[i]==0){
                 	if(len||np)tr=1;

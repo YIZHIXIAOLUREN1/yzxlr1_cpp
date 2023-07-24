@@ -6,7 +6,7 @@ int pre[N];
 int ans=0;
 
 int main(){
-    //ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     cin >> n;
     for(int i=1,x,ss,tt;i<=n;i++){
         cin >> x;
@@ -21,7 +21,6 @@ int main(){
     while(pre[now]<=n){
         ans++;
         now=pre[now];
-        //printf("%d:%d\n",ans,now);//
     }
     ans++;
     cout << ans;
