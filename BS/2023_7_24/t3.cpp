@@ -22,7 +22,6 @@ void cg1(int u,int l,int r,int v,int x){
     pushup(u);
 }
 int cx(int u,int l,int r,int x);
-bool tr=0;
 int main(){
     ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     cin >> n >> m;
@@ -35,11 +34,10 @@ int main(){
         cin >> ty >> x1;
         x1^=last;
         if(ty=='Q'){
-            if(!(tr&&x1==last))last=cx(1,1,n,x1);
+            last=cx(1,1,n,x1);
             cout << last << "\n";
-            tr=0;
         }
-        else{tr=1;cin >> x2;x2^=last;cg1(1,1,n,x1,x2);}
+        else{cin >> x2;x2^=last;cg1(1,1,n,x1,x2);}
     }
 }
 int cx(int u,int l,int r,int x){
