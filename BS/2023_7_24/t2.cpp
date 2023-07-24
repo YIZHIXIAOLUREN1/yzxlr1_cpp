@@ -14,6 +14,7 @@ int main(){
         tt=min(n,i+x);
         pre[ss]=max(tt+1,pre[ss]);
     }
+    
     for(int i=1;i<=n;i++){
 		pre[i]=max(pre[i-1],pre[i]);
 	}
