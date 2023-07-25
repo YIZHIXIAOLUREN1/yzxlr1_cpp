@@ -11,10 +11,8 @@ int cnt;
 struct node{
 	int v;
 	int w;
-	friend bool operator <(node a,node b){
-		return a.w>b.w;
-	}
-} tmp;
+	friend bool operator <(node a,node b){return a.w>b.w;}
+};
 
 void add(int u,int v,int va){
 	to[++cnt]=v;
@@ -29,8 +27,7 @@ int dijkstra(){
 	for(int i=1;i<=n;i++)
 		dis[i]=inf;
 	dis[s]=0;
-	tmp.v=s,tmp.w=0;
-	q.push(tmp);
+	q.push((node){s,0});
 	
 	while(!q.empty()){
 		int u=q.top().v;
@@ -40,8 +37,7 @@ int dijkstra(){
 		for(int i=h[u];i;i=nxt[i]){
 			if(dis[to[i]]>dis[u]+val[i]){
 				dis[to[i]]=dis[u]+val[i];
-				tmp.w=dis[to[i]],tmp.v=to[i];
-				q.push(tmp);
+				q.push((node){to[i],dis[to[i]]});
 			}
 		}
 	}
