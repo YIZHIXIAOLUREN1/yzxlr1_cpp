@@ -45,15 +45,14 @@ int cx1(int u,int l,int r,int v){
 }
 
 int main(){
-    //ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     cin >> n >> m;
     for(int i=1;i<=n;i++){
         cin >> a[i];
         if(a[i]>a[i-1]){
-            cgq(1,1,N,a[i],a[i-1]+1,1);
+            cgq(1,1,N,a[i-1]+1,a[i],1);
         }
     }
-	for(int i=1;i<=10;i++)cout << cx1(1,1,N,i) << ":\n";//
     int last=0,x1,x2;
     char ty;
     while(m--){
@@ -66,19 +65,15 @@ int main(){
         else{
             cin >> x2;
             x2^=last;
-            if(a[x1]>a[x1-1]){
-                cgq(1,1,N,a[x1],a[x1-1]+1,-1);
-            }
-            if(a[x1+1]>a[x1]){
-                cgq(1,1,N,a[x1+1],a[x1]+1,-1);
-            }
+            if(a[x1]>a[x1-1])
+                cgq(1,1,N,a[x1-1]+1,a[x1],-1);
+            if(a[x1+1]>a[x1])
+                cgq(1,1,N,a[x1]+1,a[x1+1],-1);
             a[x1]=x2;
-            if(a[x1]>a[x1-1]){
-                cgq(1,1,N,a[x1],a[x1-1]+1,1);
-            }
-            if(a[x1+1]>a[x1]){
-                cgq(1,1,N,a[x1+1],a[x1]+1,1);
-            }
+            if(a[x1]>a[x1-1])
+                cgq(1,1,N,a[x1-1]+1,a[x1],1);
+            if(a[x1+1]>a[x1])
+                cgq(1,1,N,a[x1]+1,a[x1+1],1);
         }
     }
 }
