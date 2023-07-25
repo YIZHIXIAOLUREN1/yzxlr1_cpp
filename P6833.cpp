@@ -23,6 +23,7 @@ void dijkstra(int xx,int yy){
     for(int j=1;j<=m;j++)
 		dis[i][j]=inf;
 	dis[xx][yy]=0;
+	memset(vis,0,sizeof vis);
 	q.push((node){xx,yy,0});
 	
 	while(!q.empty()){
@@ -43,7 +44,7 @@ void dijkstra(int xx,int yy){
 ll ans=inf;
 
 int main(){
-	//ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+	ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     cin >> n >> m >> a >> b >> c;
     for(int i=1;i<=n;i++)
     for(int j=1;j<=m;j++){
