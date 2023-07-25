@@ -18,7 +18,7 @@ struct node{
 
 priority_queue<node> q;
 
-int dijkstra(int xx,int yy){
+void dijkstra(int xx,int yy){
 	for(int i=1;i<=n;i++)
     for(int j=1;j<=m;j++)
 		dis[i][j]=inf;

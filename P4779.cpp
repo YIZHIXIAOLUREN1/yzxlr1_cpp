@@ -23,7 +23,7 @@ void add(int u,int v,int va){
 
 priority_queue<node> q;
 
-int dijkstra(){
+void dijkstra(){
 	for(int i=1;i<=n;i++)
 		dis[i]=inf;
 	dis[s]=0;
