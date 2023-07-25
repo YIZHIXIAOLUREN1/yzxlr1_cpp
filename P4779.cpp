@@ -1,16 +1,17 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define MAXN 300000
+#define N 300000
+#define ll long long
 const int inf=2147483647;
 int n,m,s;
-int h[MAXN],to[MAXN],val[MAXN],nxt[MAXN];
-long long dis[MAXN];
-bool vis[MAXN];
+int h[N],to[N],val[N],nxt[N];
+ll dis[N];
+bool vis[N];
 int cnt;
 
 struct node{
 	int v;
-	int w;
+	ll w;
 	friend bool operator <(node a,node b){return a.w>b.w;}
 };
 
