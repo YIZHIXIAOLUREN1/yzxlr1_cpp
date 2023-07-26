@@ -10,7 +10,7 @@ vector<pr> G[N];
 ll f[N],g[N];
 
 void dfs(int u,int fa){
-    int mw=0;
+    ll mw=0;
     for(auto i:G[u]){
         int v=i.first,w=i.second;
         if(v==fa)continue;
@@ -19,14 +19,17 @@ void dfs(int u,int fa){
             f[u]+=min(f[v],g[v]+w);
             if(f[v]>g[v]+w){
                 g[u]+=g[v]+w;
-                mw=max(mw,w);
-            }else g[u]+=f[v];
+                mw=max(mw,(ll)w);
+            }else{
+                g[u]+=f[v];
+                mw=max(mw,f[v]-g[v]);
+            }
         }else{
             g[u]+=min(f[v],g[v]+w);
         }
     }
     if(a[u]==1)f[u]=inf;
-    else if(mw!=0)g[u]-=mw;
+    else g[u]-=mw;
     //printf("%d:%d %d\n",u,f[u],g[u]);//
 }
 
