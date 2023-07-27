@@ -16,7 +16,7 @@ ll mg,mp,mvp;
 ll ans=0,q2[65];
 
 int main(){
-    //ios::sync_with_stdio();cin.tie(0);cout.tie(0);
+    ios::sync_with_stdio();cin.tie(0);cout.tie(0);
     q2[0]=1;
     for(int i=1;i<=64;i++)q2[i]=2*q2[i-1];
 
