@@ -1,9 +1,10 @@
 #include<bits/stdc++.h>
 using namespace std;
+#define N 10000
 #define LL long long
 #define int long long
 const int p=998244353;
-
+int inv[N];
 int read(){
     int res=0;
     char c;c=getchar();
@@ -25,14 +26,12 @@ int ksm(int a, int b){
 	}
 	return res;
 }
-int inv(int a){
-    return ksm(a,p-2);
-}
+
 int C(int a,int b){
 	int res=1;
 	for(int i=1,j=a;i<=b;i++,j--){
 		res=(LL)res*j%p;
-		res=(LL)res*inv(i)%p;
+		res=(LL)res*inv[i]%p;
 	}
 	return res;
 }
@@ -43,7 +42,7 @@ int work(int n,int m){
     for(int i=m;i<(n+1)/2;i++){
     	//cout << "A";//
         res=(res+ns)%p;
-        ns=(LL)ns*(n+1-2*i)%p*(n-2*i)%p*inv(n+1-i)%p*inv(i+1)%p;
+        ns=(LL)ns*(n+1-2*i)%p*(n-2*i)%p*inv[n+1-i]%p*inv[i+1]%p;
         //printf("%d:%d %d %d/%d %d\n",i,ns,n+1-2*i,n-2*i,inv(n+1-i),inv(i+1));//
     }
     res=(res+ns)%p;
@@ -52,6 +51,9 @@ int work(int n,int m){
 
 signed main(){
     int T=read();
+    for(int i=1;i<=N-10;i++){
+        inv[i]=ksm(i,p-2);
+    }
     while(T--){
         int x=read(),y=read();
         printf("%lld\n",work(x,y));
