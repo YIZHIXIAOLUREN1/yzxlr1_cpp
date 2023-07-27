@@ -2,17 +2,10 @@
 using namespace std;
 #define N 10000500
 #define M 500050
-int a[N],ans;
-int s[N];
+char s[N];
+int v[N];
 int n,m;
-void reads(){
-    char c;c=getchar();
-    while((c<'0'||c>'9')&&c!='\r'&&c!='\n'){
-    	a[++n]=c;
-    	//printf("%d:%d\n",n,c);//
-    	c=getchar();
-    }
-}
+
 int read(){
     int res=0;
     char c;c=getchar();
@@ -22,17 +15,17 @@ int read(){
 }
 
 int main(){
-    reads();
+    scanf("%s",s+1);
+    n=strlen(s+1);
     m=read();
     for(int i=1,l,r;i<=m;i++){
         l=read();r=read();
-        s[l]++,s[r+1]--;
+        v[l]++,v[n/2+1]--;
     }
     int now=0;
     for(int i=1;i<=n;i++){
-        now+=s[i];
-        if(now&1) ans=a[n+1-i];
-        else ans=a[i];
-        putchar(ans);
+        now+=v[i];
+        if(now&1)swap(s[i],s[n+1-i]);
     }
+    puts(s+1);
 }
