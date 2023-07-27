@@ -1,7 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define N 35
-#define ll long long
+#define int ll
+#define ll unsigned long long
 struct gy{
     int x,y;
     ll v,w;
@@ -15,17 +16,13 @@ int gg,n,T;
 ll mg,mp,mvp;
 ll ans=0,q2[65];
 
-int main(){
+signed main(){
     ios::sync_with_stdio();cin.tie(0);cout.tie(0);
     q2[0]=1;
-    for(int i=1;i<=64;i++)q2[i]=2*q2[i-1];
+    for(int i=1;i<=60;i++)q2[i]=2*q2[i-1];
 
     cin >> gg >> n >> mg >> mp >> T;
-    for(int i=0;i<=64;i++){
-        if(q2[i]>mp){
-            mvp=i;break;
-        }
-    }
+    if(!gg||!mg||!mp||!T){puts("0");return 0;}
     if(mp==0){puts("0");return 0;}
     for(int i=1;i<=gg;i++){
         cin >> g[i].x >> g[i].y >> g[i].v >> g[i].w;
@@ -37,15 +34,21 @@ int main(){
         	if(vis[i][j])continue;
             tot=0;
             for(int k=1;k<=gg;k++){
-                if(abs(g[k].x-i)+abs(g[k].y-j)<=mvp){
-                    ll dw=min(mg,(mp-q2[abs(g[k].x-i)+abs(g[k].y-j)-1])/g[k].w);
+                int dp=abs((int32_t)(g[k].x-i))+abs((int32_t)(g[k].y-j));
+                if(q2[dp]<=mp){
+                    ll dw=min(mg,(mp-q2[dp])/g[k].w);
                     dw=min(dw,g[k].v);
-                    cmg[++tot]=g[k];
-                    cmg[tot].w=dw;
-                    if(g[k].v-dw>0){
-                        dw=min(g[k].v-dw,dw);
+                    if(q2[dp+1]<=mp&&mp-q2[dp+1]>=min(2*dw,g[k].v)*g[k].w){
+                        cmg[++tot]=g[k];
+                        cmg[tot].w=2*dw;
+                    }else{
                         cmg[++tot]=g[k];
                         cmg[tot].w=dw;
+                        if(g[k].v>dw){
+                            dw=min(g[k].v-dw,dw);
+                            cmg[++tot]=g[k];
+                            cmg[tot].w=dw;
+                        }
                     }
                 }
             }
