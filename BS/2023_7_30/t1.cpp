@@ -35,6 +35,7 @@ bool check(int md){
     for(int i=1;i<=n;i++){
         if(deg1[i]>=md)res=1;
     }
+    //printf("%d:%d\n",md,res);//
     return res;
 }
 
@@ -52,7 +53,7 @@ int main(){
     while(l<r){
         int mid=(l+r)>>1;
         bool tr=check(mid);
-        //printf("%d %d:%d %d\n",l,r,mid,tr);//
+        //rintf("%d %d:%d %d\n",l,r,mid,tr);//
         if(tr)l=mid+1;
         else r=mid-1;
     }
