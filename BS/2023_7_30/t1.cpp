@@ -14,15 +14,21 @@ bool check(int md){
     memset(vis,0,sizeof vis);
     head=1,top=0;
     for(int i=1;i<=n;i++){
-        if(deg1[i]<md)q[++top]=i;
+        if(deg1[i]<md){
+        	q[++top]=i;
+        	vis[i]=1;
+        }
     }
     while(head<=top){
         int u=q[head++];
-        vis[u]=1;
+        deg1[u]=0;
         for(auto v:G[u]){
             if(vis[v])continue;
             deg1[v]--;
-            if(deg1[v]<md)q[++top]=v;
+            if(deg1[v]<md){
+            	q[++top]=v;
+            	vis[v]=1;
+            }
         }
     }
     bool res=0;
@@ -45,7 +51,12 @@ int main(){
     
     while(l<r){
         int mid=(l+r)>>1;
-        if(check(mid))l=mid+1;
+        bool tr=check(mid);
+        //printf("%d %d:%d %d\n",l,r,mid,tr);//
+        if(tr)l=mid+1;
         else r=mid-1;
     }
+    while(!check(l))l--;
+    while(check(l+1))l++;
+    cout << l;
 }
