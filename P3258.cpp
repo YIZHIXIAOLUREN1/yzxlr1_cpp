@@ -29,17 +29,19 @@ void dfs2(int u,int tp){
 }
 
 int LCA(int x,int y){
-    if(dp[x]<dp[y])swap(x,y);
-    while(top[x]!=y){
-        x=top[x];
-        if(dp[x]<dp[y])swap(x,y);
-    }
-    return x;
+	while(top[x]!=top[y]){
+		if(dp[top[x]]<dp[top[y]]){
+			swap(x,y);
+		}
+		x=fa[top[x]];
+	}
+	return (dp[x]<dp[y])?x:y;
 }
 
 void dfs3(int u){
     for(auto v:G[u]){
         if(v==fa[u])continue;
+        dfs3(v);
         ans[u]+=ans[v];
     }
 }
@@ -56,11 +58,13 @@ int main(){
     dfs1(1,0);
     dfs2(1,1);
     for(int i=1;i<n;i++){
+    	//cout << "A";//
         int x=q[i],y=q[i+1];
         int lca=LCA(x,y);
-        ans[x]++,ans[y]++,ans[lca]++,ans[fa[lca]]++;
+        //printf("%d %d:%d\n",x,y,lca);//
+        ans[x]++,ans[y]++,ans[lca]--,ans[fa[lca]]--;
     }
     dfs3(1);
-    ans[q[n]]--;
+    for(int i=2;i<=n;i++)ans[q[i]]--;
     for(int i=1;i<=n;i++)cout << ans[i] <<"\n";
 }
