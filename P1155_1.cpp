@@ -3,23 +3,27 @@ using namespace std;
 #define ll long long
 const int N=1e3+7;
 int n;
-int a[N],fm[N];
+int a[N];
 vector<int> G[N];
 int col[N];
 int q[N],q1[N],q2[N];
 int t,t1,t2;
 int main(){
-    //ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     cin >> n;
     for(int i=1;i<=n;i++)cin >> a[i];
-    fm[n]=n+1;
-    for(int i=n;i>=2;i--)fm[i-1]=min(a[i],fm[i]);
     for(int i=1;i<=n-2;i++){
         for(int j=i+1;j<=n-1;j++){
-            if(a[i]>=a[j]||fm[j]>=a[i])continue;
-            G[i].push_back(j);
-            G[j].push_back(i);
-            //printf("%d %d\n",i,j);//
+            bool flag=0;
+            for(int k=j+1;k<=n;k++){
+                if(a[i]>=a[j]||a[k]>=a[i])continue;
+                flag=1;
+                break;
+            }
+            if(flag){
+                G[i].push_back(j);
+                G[j].push_back(i);
+            }
         }
     }
     for(int i=1;i<=n;i++)if(!col[i]){
@@ -38,11 +42,9 @@ int main(){
     	    }
 	    }
     }
-    //for(int i=1;i<=n;i++)printf("%d ",col[i]);//
     q1[0]=q2[0]=N;
     int now=1,i=1;
     while(now<n){
-    	//cout << now<<i<<"\n";//
     	int p1=q1[t1],p2=q2[t2];
     	if(col[i]==1&&a[i]<p1)q1[++t1]=a[i++],cout<<"a ";
     	else if(p1==now)now++,t1--,cout<<"b ";
