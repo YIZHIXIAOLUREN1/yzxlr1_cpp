@@ -12,6 +12,7 @@ int res=0;
 void dfs(int u,int fa,int d){
     if(!vis[u])vis[u]=1,res++;
     ud[u]=d;
+    if(d==0)return;
     for(auto v:G[u]){
         if(vis[v]&&d-ud[v]<2)continue;
         if(v==fa)continue;
@@ -20,13 +21,14 @@ void dfs(int u,int fa,int d){
 }
 
 bool check(int xa){
-    memset(vis,0,sizeof vis);
+	memset(vis,0,sizeof vis);
     memset(ud,0,sizeof ud);
     res=0;
     for(auto u:od){
         dfs(u,0,xa);
-        if(res>=n-k)return 1;
     }
+    //printf("%d:%d\n",xa,res);//
+    if(res>=n-k)return 1;
     return 0;
 }
 
@@ -42,8 +44,10 @@ int main(){
     for(int i=1;i<=n;i++)if(deg[i]==1)od.push_back(i);
     int l=0,r=n;
     while(l<=r){
-        if(check(mid))l=mid+1;
+        if(!check(mid))l=mid+1;
         else r=mid-1;
     }
-    cout << l;
+    while(!check(l))l++;
+    while(check(l-1)&&l>=1)l--;
+    cout << l+1;
 }
