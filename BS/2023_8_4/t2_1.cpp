@@ -57,7 +57,7 @@ bool check(int xa){
 }
 
 int main(){
-    //ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     cin >> n >> k;
     for(int i=1,u,v;i<=n-1;i++){
         cin >> u >> v;
@@ -70,8 +70,13 @@ int main(){
     	//if(i<=1000)printf("%d ",i);//
     }
     pre();
+    // int md=0;
+    // for(int i=1;i<=n;i++){
+    	// if(dis[i]!=inf)md=max(md,dis[i]);
+    // }
+    // cout << md <<"\n";//
     //cout << "\n";//
-    int l=0,r=n;
+    int l=0,r=n/2+1;
     //check(3);
     while(l<=r){
     	bool tr=check(mid);
