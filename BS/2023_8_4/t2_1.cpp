@@ -22,23 +22,20 @@ void pre(){
     memset(dis,0x3f,sizeof dis);
     res=0;
     for(auto u:od){
-        vis[u]=1;
         dis[u]=0;
         q.push({u,0});
     }
     while(!q.empty()){
         int u=q.top().id;
         q.pop();
-        vis[u]=0;
+        if(vis[u])continue;
+        vis[u]=1;
         for(auto v:G[u]){
         	//if(u<=100||v<=100)//
         	//printf("%d %d:%d %d\n",u,v,dis[u],dis[v]);//
             if(dis[v]>dis[u]+1){
                 dis[v]=dis[u]+1;
-                if(!vis[v]){
-                	q.push({v,dis[v]});
-					vis[v]=1;
-				}
+                q.push({v,dis[v]});
             }
         }
     }
