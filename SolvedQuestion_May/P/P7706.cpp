@@ -10,7 +10,7 @@ int n,m;
 int a[N],b[N];
 struct node{
     ll ans,ma,mb,la,ra;
-}w[N<<1],ni;
+}w[N*4],ni;
 
 #define gc() getchar()
 #define pc(x) putchar(x)
