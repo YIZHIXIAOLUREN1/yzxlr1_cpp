@@ -73,7 +73,7 @@ int main(){
     // }
     // cout << md <<"\n";//
     //cout << "\n";//
-    int l=0,r=n/2+1;
+    int l=0,r=n/2;
     //check(3);
     while(l<=r){
     	bool tr=check(mid);
