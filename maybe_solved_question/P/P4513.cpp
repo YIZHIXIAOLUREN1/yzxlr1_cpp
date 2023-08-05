@@ -69,6 +69,7 @@ int main(){
         if(k==1){
             if(x>y)swap(x,y);
             pr(query(1,1,n,x,y).ans);
+            pc(10);
         }else update1(1,1,n,x,y);
     }
 
