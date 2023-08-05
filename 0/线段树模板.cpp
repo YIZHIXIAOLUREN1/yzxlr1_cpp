@@ -9,8 +9,8 @@ using namespace std;
 int mod;
 int n,m;
 int num[N];
-LL w[N];
-LL lazyc[N],lazyh[N];
+LL w[N*4];
+LL lazyc[N*4],lazyh[N*4];
 
 void pushup(const int u){w[u]=(w[ls]+w[rs])%mod;}
 void maketag(int u,int l,int r,LL xh,LL xc){
