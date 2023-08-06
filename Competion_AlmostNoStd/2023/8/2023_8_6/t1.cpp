@@ -26,7 +26,7 @@ void pre(){
     for(int i=1;i<=n;i++){
         f[i]=(ll)f[i-1]*lcg[i-1]%mod*i%mod;
         lcg[i]=(ll)lcg[i-1]*i%mod;
-        inf[i]=inv(f[i]);
+        //inf[i]=inv(f[i]);
         //printf("%d:%d %d %d\n",i,f[i],lcg[i],inf[i]);//
     }
 }
@@ -41,7 +41,7 @@ int main(){
         while(q--){
             int r;
             cin >> r;
-            cout << (ll)f[n]*inf[r]%mod*inf[n-r]%mod << "\n";
+            cout << (ll)f[n]*inv(f[r])%mod*inv(f[n-r])%mod << "\n";
         }
     }
 }
