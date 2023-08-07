@@ -42,7 +42,7 @@ int main(){
         }
         for(int j=1;j<=cnt;j++){
             for(int k=j+1;k<=cnt;k++){
-                h[i][j][k]=(a[i]!=j)*f[i+1][j]
+                //h[i][j][k]=(a[i]!=j)*f[i+1][j];
                 h[i][k][j]=h[i][j][k]%=mod;
                 printf("h%d %d %d:%d\n",i,j,k,h[i][j][k]);//
             }
