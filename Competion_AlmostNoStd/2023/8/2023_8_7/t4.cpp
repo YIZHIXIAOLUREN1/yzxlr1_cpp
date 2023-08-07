@@ -40,7 +40,7 @@ int main(){
         while(j&&s2[j+1]!=s1[i])j=kmp[j];
         if(s2[j+1]==s1[i])j++;
         if(j==m){
-            ans=((i==m)||K>0);
+            ans=1;
             //printf("%d:%d\n",i,j);//
             break;
         }
