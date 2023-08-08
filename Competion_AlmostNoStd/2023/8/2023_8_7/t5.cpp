@@ -14,7 +14,7 @@ void hb(int x,int y){
         auto pos=find(ans.begin(),ans.end(),x);
         ans.insert(pos,y);
     }
-    printf("h%d %d\n",x,y);
+    printf("h%d %d\n",x,y);//
     for(int i=0;i<b[y].size();i++){
         b[x].push_back(b[y][i]);
         while(b[x][b[x].size()-1]==0&&b[x][b[x].size()-2]==1)
