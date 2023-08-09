@@ -28,6 +28,7 @@ int main(){
     print(1);
     for(int i=2;i<=n;i++){
         inv[i]=(ll)(mod-mod/i)*inv[mod%i]%mod;
+        //inv[i]=(1ll*(-(mod/i))*inv[mod%i]+mod)%mod;
         print(inv[i]);
     }
 }
