@@ -30,7 +30,6 @@ int main(){
         	}
             for(int j=i;j<=i+m-1;j++)b[j]=1ll*d*(j-i)+a[j]+c;
             sort(b+1,b+n+1);
-            //for(int j=1;j<=n;j++)cout << b[j] << " \n"[j==n];//
             ans=max(ans,b[n-k+1]);
         }
     }
