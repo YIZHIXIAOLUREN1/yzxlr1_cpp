@@ -33,7 +33,7 @@ int main(){
         hl[u]=min(hl[u],v+1);
         hr[v]=max(hr[v],u-1);
     }
-    //cout<<"A";//
+    
     head=1,top=0;
     for(int i=1;i<=n;i++){
         gl[i][0]=max(gl[i][0],gl[i-1][0]);
@@ -58,23 +58,19 @@ int main(){
             q[++top]=v-1;
         }
         if(head<=top)hr[i]=q[head];
-        //printf("R%d:%d %d\n",i,gr[i][0],fr[i][0]);//
         //printf("R%d:%d\n",i,hr[i]);//
     }
-    //cout<<"C";//
+    
     for(int i=1;i<=32;i++){
         for(int j=1;j<=n;j++){
             gl[j][i]=max(gl[gl[j][i-1]][i-1],gl[j][i-1]);
             fl[j][i]=max(gl[fl[j][i-1]][i-1],fl[j][i-1]);
-            //printf("L%d:%d:%d %d\n",i,j,gl[j][i],fl[j][i]);//
         }
         for(int j=n;j>=1;j--){
             gr[j][i]=max(gr[gr[j][i-1]][i-1],gr[j][i-1]);
-            fr[j][i]=max(gr[fr[j][i-1]][i-1],fr[j][i-1]);
-            //printf("R%d:%d:%d %d\n",i,j,gr[j][i],fr[j][i]);//
-        }
+            fr[j][i]=max(gr[fr[j][i-1]][i-1],fr[j][i-1]);        }
     }
-    //cout<<"B";//
+    
     int L,R;
     while(Q--){
         cin >> L >> R;
