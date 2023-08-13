@@ -1,10 +1,10 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define ll long long
-const int N=1e9+7,mod=998244353;
+const int N=1e7+7,mod=998244353;
 int n,g,l;
 bool vis[N];
-int p[N/20],tot=0;
+int p[N/15],tot=0;
 
 void getprime(){
     for(int i=2;i<N;i++){
@@ -37,7 +37,6 @@ int main(){
     cin >> T;
     while(T--){
         cin >> n >> g >> l;
-        ll d=so(l/g);
         
     }
 
