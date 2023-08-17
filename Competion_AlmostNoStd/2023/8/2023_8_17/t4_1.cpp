@@ -8,6 +8,9 @@ using namespace std;
 const int N=1e6+7,inf=-1000000;
 int n,m;
 int a[N];
+
+bool debug=0;
+
 struct node{
     int l,r;
     int cnt;
@@ -20,7 +23,7 @@ struct node{
 }w[N*4],ze;
 
 bool cmp(int a,int b,int c,int d){
-	return a*d>b*c;
+	return 1ll*a*d>1ll*b*c;
 }
 
 node operator + (node a,node b){
@@ -29,20 +32,20 @@ node operator + (node a,node b){
     node res;
     res.l=a.l,res.r=b.r;
     res.cnt=a.cnt+b.cnt;
-    if(((db)a.ans)/a.lea>((db)b.ans)/b.lea)res.ans=a.ans,res.lea=a.lea;
+    if(cmp(a.ans,a.lea,b.ans,b.lea))res.ans=a.ans,res.lea=a.lea;
     else res.ans=b.ans,res.lea=b.lea;
-    if(((db)res.ans)/res.lea<((db)(a.ra+b.la))/(a.ler+b.lel))
+    if(cmp(a.ra+b.la,a.ler+b.lel,res.ans,res.lea))
     res.ans=a.ra+b.la,res.lea=a.ler+b.lel;
 
-    if(((db)a.la/a.lel)>((db)(a.cnt+b.la))/(a.r-a.l+1+b.lel))res.la=a.la,res.lel=a.lel;
+    if(cmp(a.la,a.lel,a.cnt+b.la,a.r-a.l+1+b.lel))res.la=a.la,res.lel=a.lel;
     else res.la=a.cnt+b.la,res.lel=a.r-a.l+1+b.lel;
 
-    if(((db)b.ra)/b.ler>((db)(b.cnt+a.ra))/(b.r-b.l+1+a.ler))res.ra=b.ra,res.ler=b.ler;
+    if(cmp(b.ra,b.ler,b.cnt+a.ra,b.r-b.l+1+a.ler))res.ra=b.ra,res.ler=b.ler;
     else res.ra=b.cnt+a.ra,res.ler=b.r-b.l+1+a.ler;
 
-    if(res.lel>1&&((db)res.ans)/res.lea<((db)res.la)/res.lel)
+    if(res.lel>1&&cmp(res.la,res.lel,res.ans,res.lea))
         res.ans=res.la,res.lea=res.lel;
-    if(res.ler>1&&((db)res.ans)/res.lea<((db)res.ra)/res.ler)
+    if(res.ler>1&&cmp(res.ra,res.ler,res.ans,res.lea))
         res.ans=res.ra,res.lea=res.ler;
     return res;
 }
@@ -107,8 +110,10 @@ node query(int u,int L,int R){
     	pushdown(u);
     	res=query(ls,L,R)+query(rs,L,R);
     }
-    //printf("%d:\n",u);//
-    //res.ou();//
+    if(debug){
+    	printf("%d:\n",u);
+    	res.ou();
+    }
     return res;
 }
 
@@ -118,7 +123,7 @@ int gcd(int a,int b){
 }
 
 int main(){
-    //ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     ze.l=ze.r=ze.lea=ze.lel=ze.ler=1;
     ze.cnt=ze.ans=ze.la=ze.ra=inf;
     cin >> n >> m;
@@ -132,10 +137,12 @@ int main(){
             changeq(1,ll,rr,xx);
         }else{
         	int fl=1;
+        	//if(ll==39&&rr==46)debug=1;//
             node an = query(1,ll,rr);
             if(an.ans<0)fl=-1,an.ans=-an.ans;
             int g=gcd(an.ans,an.lea);
             cout << fl*an.ans/g << "/" << an.lea/g <<"\n";
+            //debug=0;//
         }
     }
 }
