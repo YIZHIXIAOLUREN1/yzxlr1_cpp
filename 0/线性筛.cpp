@@ -26,8 +26,7 @@ void pre(){
 			if(i%p[j]==0){
 				phi[i*p[j]]=phi[i]*p[j];
 				break;
-			}
-			else phi[i*p[j]]=phi[i]*(p[j]-1);
+			}else phi[i*p[j]]=phi[i]*(p[j]-1);
 		}
 	}
 }
