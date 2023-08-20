@@ -2,36 +2,40 @@
 using namespace std;
 #define ll long long
 const int N=1e6+7;
-ll n,b[20];
-string s;
-int w[N*36],tot;
-int G[N][10];
+int n,b[20];
+ll a[N];
+ll ans;
 
-void init(int u,ll q,ll x){
-    printf("%d:%lld:%lld:%d\n",u,q,x,w[u]);//
-    int v,tt=x,f=0;
-    while(tt>9)tt/=10,f++;
-    if(G[u][tt])v=G[u][tt];
-    else G[u][tt]=v=++tot;
-    q=q*10+tt;
-    if(x<10) w[u]++;
-    else init(v,q,x-tt*10*f);
-}
-
-ll dfs(int u,ll q){
-
+bool check(ll x,ll y){
+	//printf("%lld:%lld\n",x,y);//
+    while(x&&y){
+        int a=x%10,b=y%10;
+        if(a==b)return 1;
+        if(a<b)swap(x,y),swap(a,b);
+        y/=10;
+    }
+    return 0;
 }
 
 int main(){
     //ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     cin >> n;
     for(int i=1;i<=n;i++){
-        cin >> s;
+        cin >> a[i];
         int top=0;
-        for(int i=0;i<s.size();i++)b[++top]=s[i]-'0';
+        while(a[i])b[++top]=a[i]%10,a[i]/=10;
         sort(b+1,b+1+top);
-        for(int i=0;i<s.size();i++)s[i]=b[i]+'0';
+        for(int j=top;j>=1;j--){
+            a[i]=a[i]*10+b[j];
+            while(b[j]==b[j-1])j--;
+        }
     }
 
-    
+    for(int i=1;i<n;i++){
+        for(int j=i+1;j<=n;j++){
+        	//printf("%d:%d:\n",i,j);//
+            if(check(a[i],a[j]))ans++;
+        }
+    }
+    cout << ans;
 }
