@@ -16,7 +16,6 @@ int ax[N],ay[N];
 int f[N][N];
 
 int main(){
-    //ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     n=read();
     for(int i=1;i<=n;i++){
         ax[i]=read();

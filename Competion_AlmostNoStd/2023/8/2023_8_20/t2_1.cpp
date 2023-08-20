@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 //#define ll long long
-const int N=2003;
+const int N=2007;
 const int inf=0x3f3f3f3f;
 int n,p[5];
 bool a[4][N];
@@ -29,7 +29,6 @@ int dp(int x1,int x2,int y1,int y2){
             res=min(res,dp(x1,x2,y1,y2-t-1)+dp(x1,x2,y2-t,y2));
         if(x2-x1+1<=t&&y2-y1+1<=t)res=min(res,p[t]*check(x1,x2,y1,y2));
     }
-    //printf("%d %d %d %d:%d\n",x1,y1,x2,y2,res);//
     vis2[x1][x2][y1][y2]=1;
     return f[x1][x2][y1][y2]=res;
 }
