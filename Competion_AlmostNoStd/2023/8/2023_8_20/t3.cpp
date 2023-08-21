@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define ll long long
-const int N=1007;
+const int N=10007;
 
 #define gc() getchar()
 #define pc(x) putchar(x)
