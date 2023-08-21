@@ -4,6 +4,5 @@ using namespace std;
 const int N=1e7+7;
 
 int main(){
-    set<int> q;
     
 }

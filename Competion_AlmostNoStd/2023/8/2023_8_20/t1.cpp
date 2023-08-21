@@ -32,10 +32,13 @@ int main(){
         //printf("%d:%d\n",i,a[i]);//
     }
 
-    for(int i=1;i<n;i++){
-        for(int j=i+1;j<=n;j++){
+    for(int i=1;i<n;++i){
+        for(int j=i+1;j<=n;++j){
         	//printf("%d:%d:\n",i,j);//
-            if(a[i]&a[j])ans++;
+            while(a[i]&a[j]){
+            	ans++;
+            	break;
+            }
         }
     }
     cout << ans;
