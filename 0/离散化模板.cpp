@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define MAXN 1000000
-int lsh[MAXN],cnt,num[MAXN],n;
+#define N 1000000
+int lsh[N],cnt,num[N],n;
 int main(){
 	scanf("%d",&n); 
 	for(int i=1; i<=n; i++) {
