@@ -25,8 +25,9 @@ int main(){
                 if(b[j]>top)top=b[j];
                 it=j;
             }
-            
+            ans+=(top-a[i])*2+a[it]-a[i];
+            i=it;
         }
     }
-    
+    cout << ans;
 }
