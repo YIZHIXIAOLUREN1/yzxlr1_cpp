@@ -14,4 +14,14 @@ int main(){
         s[m]=a[m]+s[m-1];
         
     }
+    cout<<"0 ";
+    for(int i=1;i<=n-1;i++){
+    	int ans=s[i];
+    	for(int j=1;j<=i-1;j++){
+    		ans-=i/j-1;
+    	}
+    	cout<<ans<<" \n"[i==n-1];
+    }
 }
+
+//
