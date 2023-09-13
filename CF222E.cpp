@@ -22,11 +22,11 @@ struct gj{
     }
     friend gj operator * (gj x,gj y){
         gj res;
+        res.clear();
         for(int k=1;k<=m;k++){
             for(int i=1;i<=m;i++){
                 for(int j=1;j<=m;j++){
-                    res.a[i][j]=x.a[i][k]+y.a[k][j];
-                    res.a[i][j]%=mod;
+                    res.a[i][j]=(res.a[i][j]+1ll*x.a[i][k]*y.a[k][j])%mod;
                 }
             }
         }
@@ -55,7 +55,7 @@ int main() {
     zy.clear();
     zy.one();
     for(int i=1;i<=k;i++){
-        char u[2];
+        string u;
         cin >> u;
         zy.a[rd(u[1])][rd(u[0])]=0;
     }
