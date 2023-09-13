@@ -57,9 +57,18 @@ int main() {
     for(int i=1;i<=k;i++){
         char u[2];
         cin >> u;
-        
+        zy.a[rd(u[1])][rd(u[0])]=0;
     }
     
+    zy=zy^(n-1);
+
+    int ans=0;
+    for(int i=1;i<=m;i++){
+        for(int j=1;j<=m;j++){
+            ans=(ans+zy.a[i][j])%mod;
+        }
+    }
+    cout << ans;
     return 0;
 }
 
