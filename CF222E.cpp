@@ -44,6 +44,9 @@ gj operator ^ (gj x,ll y){
     }
     return res;
 }
+
+int rd(char x);
+
 gj zy;
 
 int main() {
@@ -58,4 +61,8 @@ int main() {
     }
     
     return 0;
+}
+
+int rd(char x){
+    return (x>='a')?(x-'a'+1):(x-'A'+27);
 }
