@@ -7,7 +7,7 @@
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
             "args": [],
-            "stopAtEntry": false,
+            "stopAtEntry": true,
             "cwd": "${workspaceRoot}",
             "environment": [],
             "externalConsole": true,
@@ -20,7 +20,7 @@
                     "ignoreFailures": false
                 }
             ],
-            "preLaunchTask": "Compile"
+            "preLaunchTask": "Compile",
         }
     ]
 }
