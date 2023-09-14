@@ -23,8 +23,8 @@ struct gj{
     friend gj operator * (gj x,gj y){
         gj res;
         res.clear();
-        for(int k=1;k<=m;k++){
-            for(int i=1;i<=m;i++){
+        for(int i=1;i<=m;i++){
+            for(int k=1;k<=m;k++){
                 for(int j=1;j<=m;j++){
                     res.a[i][j]=(res.a[i][j]+1ll*x.a[i][k]*y.a[k][j])%mod;
                 }
