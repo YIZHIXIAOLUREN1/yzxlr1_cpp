@@ -9,9 +9,10 @@ int f[N][N];
 int g[N][N];
 int deg[N];
 bool vis[N];
+int ans[N];
 
 int main(){
-    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    //ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     cin >> n >> m >> T;
     for(int i=1,u,v,t;i<=m;i++){
         cin >> u >> v >> t;
@@ -28,19 +29,31 @@ int main(){
                 for(auto ii:G[u]){
                     int v=ii.first,t=ii.second;
                     for(int i=2;i<=n;i++){
-                        f[v][i]=min(f[v][i],f[u][i-1]+t);
+                        if(f[v][i]>f[u][i-1]+t){
+                            f[v][i]=f[u][i-1]+t;
+                            //printf("%d %d %d:%d\n",u,v,i,f[v][i]);//
+                            g[v][i]=u;
+                        }
+                        //f[v][i]=min(f[v][i],f[u][i-1]+t);
                     }
                     deg[v]--;
                 }
                 rn--;
+                vis[u]=1;
                 break;
             }
         }
     }
-    int ans=0;
+    int res=0;
     for(int i=1;i<=n;i++){
-        if(f[n][i]<=T)ans=i;
+        if(f[n][i]<=T)res=i;
     }
-    cout << ans;
+    cout << res<<"\n";
+    int u=n;
+    for(int i=res;i>=1;i--){
+        ans[i]=u;
+        u=g[u][i];
+    }
+    for(int i=1;i<=res;i++)cout<<ans[i]<<" \n"[i==n];
     return 0;
 }
