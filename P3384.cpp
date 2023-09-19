@@ -26,7 +26,7 @@ void pushup(int u){
 }
 void build(int u,int l,int r){
     if(l==r){
-        w[u]=b[l];
+        w[u]=b[l]%mod;
         return;
     }
     build(ls,l,mid);
