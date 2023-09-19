@@ -14,7 +14,7 @@ int id[N],son[N],fa[N],siz[N],top[N],idx,d[N];
 
 void maketag(int u,int l,int r,ll x){
     w[u]=(w[u]+x*len)%mod;
-    laz[u]=x;
+    laz[u]+=x;
 }
 void pushdown(int u,int l,int r){
     maketag(ls,l,mid,laz[u]);
@@ -34,6 +34,7 @@ void build(int u,int l,int r){
     pushup(u);
 }
 ll query(int u,int l,int r,int L,int R){
+	//printf("%d:%d %d:%d %d\n",u,l,r,L,R);//
     if(l>R||r<L)return 0;
     if(l>=L&&r<=R)return w[u];
     pushdown(u,l,r);
@@ -67,7 +68,7 @@ void dfs2(int u,int tof){
     id[u]=++idx;
     b[idx]=a[u];
     top[u]=tof;
-    if(!siz[u])return;
+    if(siz[u]==1)return;
     dfs2(son[u],tof);
     for(auto v:G[u]){
         if(v==fa[u]||v==son[u])continue;
@@ -75,15 +76,18 @@ void dfs2(int u,int tof){
     }
 }
 ll q1(int x,int y){
+	//printf("%d %d:\n",x,y);//
     ll res=0;
     if(d[x]<d[y])swap(x,y);
     while(top[x]!=top[y]){
         if(d[top[x]]<d[top[y]])swap(x,y);
         res=(res+query(1,1,n,id[top[x]],id[x]))%mod;
+        //printf("%d %d:%d %d:%d\n",x,y,id[x],id[y],res);//
         x=fa[top[x]];
     }
     if(d[x]<d[y])swap(x,y);
     res=(res+query(1,1,n,id[y],id[x]))%mod;
+    //printf("%d %d:%d %d:%d\n",x,y,id[x],id[y],res);//
     return res;
 }
 void cg1(int x,int y,ll v){
@@ -104,7 +108,7 @@ void cz(int x,ll v){
 }
 
 int main(){
-    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+	ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     cin >> n >> m >> rent >> mod;
     for(int i=1;i<=n;i++)cin >> a[i];
     for(int i=1,u,v;i<=n-1;i++){
@@ -112,6 +116,12 @@ int main(){
         G[u].push_back(v);
         G[v].push_back(u);
     }
+    dfs1(rent,0);
+    dfs2(rent,rent);
+    build(1,1,n);
+    // for(int i=1;i<=n;i++){
+    // 	printf("%d:%d %d %d:%d %d\n",i,fa[i],son[i],siz[i],top[i],id[i]);//
+    // }
     while(m--){
         int ty,x,y;
         ll v;
