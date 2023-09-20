@@ -24,9 +24,12 @@ void build(int u,int l,int r){
     pushup(u);
 }
 ll query1(int u,int l,int r,int L,int R){
-    if(l>R||r<L)return 0;
-    if(l>=L&&r<=R)return wa[u];
-    return (query1(ls,l,mid,L,R)+query1(rs,mid+1,r,L,R));
+	int res=0;
+    if(l>R||r<L)res=0;
+    else if(l>=L&&r<=R)res=wa[u];
+    else res=(query1(ls,l,mid,L,R)+query1(rs,mid+1,r,L,R));
+    //printf("q:%d %d %d:%d %d:%d\n",u,l,r,L,R,res);//
+    return res;
 }
 ll query2(int u,int l,int r,int L,int R){
     if(l>R||r<L)return 0;
@@ -69,6 +72,7 @@ ll q1(int x,int y){
         if(d[top[x]]<d[top[y]])swap(x,y);
         res=(res+query1(1,1,n,id[top[x]],id[x]));
         x=fa[top[x]];
+        
     }
     if(d[x]<d[y])swap(x,y);
     res=(res+query1(1,1,n,id[y],id[x]));
@@ -104,7 +108,7 @@ bool cmp(prr x,prr y){return x.first>y.first;}
 int bd[10];
 bool cmp1(int x,int y){return d[x]>d[y];}
 int main(){
-    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    //ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     cin >> n >> m;
     for(int i=1,u,v,w;i<n;i++){
         cin >> u >> v >> w;
@@ -113,25 +117,30 @@ int main(){
     }
     dfs1(1,0);
     dfs2(1,1);
-    
+    build(1,1,n);
+    for(int i=1;i<=n;i++){
+    	printf("%d:%d %d %d:%d %d\n",i,fa[i],son[i],siz[i],top[i],id[i]);//
+    }
     for(int i=1,u,v;i<=m;i++){
         cin>>u>>v;
         ys[i].second.first=u;
         ys[i].second.second=v;
         ys[i].first=q1(u,v);
+        printf("%d:%d %d:%d\n",i,u,v,ys[i].first);//
     }
     sort(ys+1,ys+m+1,cmp);
     int ans=ys[1].first-q2(ys[1].second.first,ys[1].second.first);
     int u=ys[1].second.first,v=ys[1].second.second;
     for(int i=2;i<=m;i++){
         int x=ys[i].second.first,y=ys[i].second.second;
-        bd[1]=LCA(u,v);bd[4]=LCA(v,x);bd[6]=LCA(x,y);
-        bd[2]=LCA(u,x);bd[5]=LCA(v,y);
-        bd[3]=LCA(u,y);
-        sort(bd+1,bd+7,cmp1);
-        unique(bd+1,bd+7);
-        u=bd[1],v=bd[2];
-        int res=q2(u,v);
+        if(id[x]>id[y])swap(x,y);
+        if(id[u]>id[v])swap(u,v);
+        int uu=LCA(u,x);
+        int vv=LCA(uu,v),v1=LCA(uu,y),v2=LCA(v,y);
+        if(d[vv]<d[v1])vv=v1;
+        if(d[vv]<d[v2])vv=v2;
+        u=uu,v=vv;
+        int res=q2(uu,vv);
         if(ys[1].first-res>=ys[i+1].first){
             ans=min(ans,ys[1].first-res);
             break;
