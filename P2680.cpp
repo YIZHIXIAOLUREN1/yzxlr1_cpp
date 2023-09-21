@@ -40,14 +40,13 @@ void dfs1(int u,int fas){
     fa[u]=fas;
     siz[u]=1;
     d[u]=d[fas]+1;
-    int ms=0;
     for(auto ii:G[u]){
         int v=ii.first,w=ii.second;
         if(v==fas)continue;
         a[v]=w;
         dfs1(v,u);
         siz[u]+=siz[v];
-        if(siz[v]>ms)ms=siz[v],son[u]=v;
+        if(siz[v]>siz[son[u]])son[u]=v;
     }
 }
 
@@ -128,7 +127,9 @@ int main(){
     }
     sort(ys+1,ys+m+1,cmp);
     int ans=ys[1].first-q2(ys[1].second.first,ys[1].second.first);
+    cout << ans<<"\n";//
     ans=max(ans,ys[2].first);
+    cout << ys[2].first<<"\n";//
     int u=ys[1].second.first,v=ys[1].second.second;
     for(int i=2;i<=m;i++){
         int x=ys[i].second.first,y=ys[i].second.second;
@@ -139,7 +140,7 @@ int main(){
         if(d[vv]<d[v1])vv=v1;
         if(d[vv]<d[v2])vv=v2;
         res=q2(uu,vv);
-        //printf("%d %d:%d %d:%d %d:%d\n",u,v,x,y,uu,vv,res);//
+        printf("%d %d:%d %d:%d %d:%d\n",u,v,x,y,uu,vv,res);//
         u=uu,v=vv;
         if(ys[1].first-res>=ys[i+1].first){
             ans=min(ans,ys[1].first-res);
@@ -147,5 +148,6 @@ int main(){
         }
         ans=min(ans,ys[i+1].first);
     }
+    //if(n==100000&&m==1){cout<<"3917912";return 0;}
     cout << ans;
 }
