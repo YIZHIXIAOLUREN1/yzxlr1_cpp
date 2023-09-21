@@ -36,18 +36,20 @@ ll query2(int u,int l,int r,int L,int R){
     return max(query2(ls,l,mid,L,R),query2(rs,mid+1,r,L,R));
 }
 
+int ttt=0;
 void dfs1(int u,int fas){
+	ttt++;
+	//if(ttt%100==0)printf("%d\n",ttt);//
     fa[u]=fas;
     siz[u]=1;
     d[u]=d[fas]+1;
-    int ms=0;
     for(auto ii:G[u]){
         int v=ii.first,w=ii.second;
         if(v==fas)continue;
         a[v]=w;
         dfs1(v,u);
         siz[u]+=siz[v];
-        if(siz[v]>ms)ms=siz[v],son[u]=v;
+        if(siz[v]>siz[son[u]])son[u]=v;
     }
 }
 
@@ -105,13 +107,14 @@ int LCA(int x,int y){
 
 bool cmp(prr x,prr y){return x.first>y.first;}
 
-int main(){
+signed main(){
     //ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     cin >> n >> m;
     for(int i=1,u,v,w;i<n;i++){
         cin >> u >> v >> w;
         G[u].push_back({v,w});
         G[v].push_back({u,w});
+        if(i==99999)printf("%d %d:%d\n",u,v,w);//
     }
     dfs1(1,0);
     dfs2(1,1);
