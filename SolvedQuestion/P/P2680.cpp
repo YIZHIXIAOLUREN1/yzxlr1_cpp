@@ -1,18 +1,16 @@
 #include<bits/stdc++.h>
 using namespace std;
-//#define ll long long
-#define ll int
 #define pr pair<int,int>
 #define prr pair<int,pr>
 #define ls (u<<1)
 #define rs ((u<<1)|1)
 #define mid ((l+r)>>1)
 #define len (r-l+1)
-const ll N=3e5+7;
-ll n,m;
+const int N=3e5+7;
+int n,m;
 prr ys[N];
-ll a[N],b[N];
-ll wa[N*4],wx[N*4],laz[N*4];
+int a[N],b[N];
+int wa[N*4],wx[N*4],laz[N*4];
 vector<pr> G[N];
 int id[N],son[N],fa[N],siz[N],top[N],idx,d[N];
 int res;
@@ -24,13 +22,12 @@ void build(int u,int l,int r){
     build(rs,mid+1,r);
     pushup(u);
 }
-ll query1(int u,int l,int r,int L,int R){
+int query1(int u,int l,int r,int L,int R){
     if(l>R||r<L)return 0;
     if(l>=L&&r<=R)return wa[u];
     return (query1(ls,l,mid,L,R)+query1(rs,mid+1,r,L,R));
-    //printf("q:%d %d %d:%d %d:%d\n",u,l,r,L,R,res);//
 }
-ll query2(int u,int l,int r,int L,int R){
+int query2(int u,int l,int r,int L,int R){
     if(l>R||r<L)return 0;
     if(l>=L&&r<=R)return wx[u];
     return max(query2(ls,l,mid,L,R),query2(rs,mid+1,r,L,R));
@@ -63,7 +60,7 @@ void dfs2(int u,int tof){
     }
 }
 
-ll q1(int x,int y){
+int q1(int x,int y){
     res=0;
     if(d[x]<d[y])swap(x,y);
     while(top[x]!=top[y]){
@@ -78,7 +75,7 @@ ll q1(int x,int y){
     return res;
 }
 
-ll q2(int x,int y){
+int q2(int x,int y){
     res=0;
     if(d[x]<d[y])swap(x,y);
     while(top[x]!=top[y]){
@@ -115,21 +112,15 @@ int main(){
     dfs1(1,0);
     dfs2(1,1);
     build(1,1,n);
-    // for(int i=1;i<=n;i++){
-    // 	printf("%d:%d %d %d:%d %d\n",i,fa[i],son[i],siz[i],top[i],id[i]);//
-    // }
     for(int i=1,u,v;i<=m;i++){
         cin>>u>>v;
         ys[i].second.first=u;
         ys[i].second.second=v;
         ys[i].first=q1(u,v);
-        //printf("%d:%d %d:%d\n",i,u,v,ys[i].first);//
     }
     sort(ys+1,ys+m+1,cmp);
     int ans=ys[1].first-q2(ys[1].second.first,ys[1].second.second);
-    //cout << ans<<"\n";//
     ans=max(ans,ys[2].first);
-    //cout << ys[2].first<<"\n";//
     int u=ys[1].second.first,v=ys[1].second.second;
     for(int i=2;i<=m;i++){
         int x=ys[i].second.first,y=ys[i].second.second;
@@ -142,7 +133,6 @@ int main(){
         if(d[vv]<d[v1])vv=v1;
         if(d[vv]<d[v2])vv=v2;
         res=q2(uu,vv);
-        //printf("%d %d:%d %d:%d %d:%d\n",u,v,x,y,uu,vv,res);//
         u=uu,v=vv;
         if(ys[1].first-res>=ys[i+1].first){
             ans=min(ans,ys[1].first-res);
@@ -150,6 +140,5 @@ int main(){
         }
         ans=min(ans,ys[i+1].first);
     }
-    //if(n==100000&&m==1){cout<<"3917912";return 0;}
     cout << ans;
 }
