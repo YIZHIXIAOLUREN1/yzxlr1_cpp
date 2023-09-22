@@ -12,6 +12,41 @@ ll w[N*4],laz[N*4];
 vector<int> G[N];
 int id[N],son[N],fa[N],siz[N],top[N],idx,d[N];
 
+void dfs1(int u,int fas){
+    fa[u]=fas;
+    siz[u]=1;
+    d[u]=d[fas]+1;
+    int ms=0;
+    for(auto v:G[u]){
+        if(v==fas)continue;
+        dfs1(v,u);
+        siz[u]+=siz[v];
+        if(siz[v]>ms)ms=siz[v],son[u]=v;
+    }
+}
+
+void dfs2(int u,int tof){
+    id[u]=++idx;
+    b[idx]=a[u];
+    top[u]=tof;
+    if(siz[u]==1)return;
+    dfs2(son[u],tof);
+    for(auto v:G[u]){
+        if(v==fa[u]||v==son[u])continue;
+        dfs2(v,v);
+    }
+}
+
+int LCA(int x,int y){
+	while(top[x]!=top[y]){
+		if(d[top[x]]<d[top[y]]){
+			swap(x,y);
+		}
+		x=fa[top[x]];
+	}
+	return (d[x]<d[y])?x:y;
+}
+
 void pushup(int u){w[u]=(w[ls]+w[rs])%mod;}
 void maketag(int u,int l,int r,ll x){w[u]=(w[u]+x*len)%mod;laz[u]+=x;}
 void pushdown(int u,int l,int r){
@@ -43,31 +78,6 @@ void change(int u,int l,int r,int L,int R,ll x){
     pushup(u);
 }
 
-void dfs1(int u,int fas){
-    fa[u]=fas;
-    siz[u]=1;
-    d[u]=d[fas]+1;
-    int ms=0;
-    for(auto v:G[u]){
-        if(v==fas)continue;
-        dfs1(v,u);
-        siz[u]+=siz[v];
-        if(siz[v]>ms)ms=siz[v],son[u]=v;
-    }
-}
-
-void dfs2(int u,int tof){
-    id[u]=++idx;
-    b[idx]=a[u];
-    top[u]=tof;
-    if(siz[u]==1)return;
-    dfs2(son[u],tof);
-    for(auto v:G[u]){
-        if(v==fa[u]||v==son[u])continue;
-        dfs2(v,v);
-    }
-}
-
 ll q1(int x,int y){
     ll res=0;
     if(d[x]<d[y])swap(x,y);
@@ -96,16 +106,6 @@ ll qz(int x){
 }
 void cz(int x,ll v){
     change(1,1,n,id[x],id[x]+siz[x]-1,v);
-}
-
-int LCA(int x,int y){
-	while(top[x]!=top[y]){
-		if(d[top[x]]<d[top[y]]){
-			swap(x,y);
-		}
-		x=fa[top[x]];
-	}
-	return (d[x]<d[y])?x:y;
 }
 
 int main(){
