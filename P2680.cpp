@@ -105,7 +105,7 @@ int LCA(int x,int y){
 bool cmp(prr x,prr y){return x.first>y.first;}
 
 int main(){
-    //ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     cin >> n >> m;
     for(int i=1,u,v,w;i<n;i++){
         cin >> u >> v >> w;
@@ -126,21 +126,23 @@ int main(){
         //printf("%d:%d %d:%d\n",i,u,v,ys[i].first);//
     }
     sort(ys+1,ys+m+1,cmp);
-    int ans=ys[1].first-q2(ys[1].second.first,ys[1].second.first);
-    cout << ans<<"\n";//
+    int ans=ys[1].first-q2(ys[1].second.first,ys[1].second.second);
+    //cout << ans<<"\n";//
     ans=max(ans,ys[2].first);
-    cout << ys[2].first<<"\n";//
+    //cout << ys[2].first<<"\n";//
     int u=ys[1].second.first,v=ys[1].second.second;
     for(int i=2;i<=m;i++){
         int x=ys[i].second.first,y=ys[i].second.second;
+        if(id[x]<id[y]&&id[y]<=id[x]+siz[x]-1)swap(x,y);
         if(id[x]>id[y]&&id[x]>id[y]+siz[y]-1)swap(x,y);
-        if(id[u]>id[v]&&id[u]>id[v]+siz[v]-1)swap(u,v);
+        if(id[u]<id[v]&&id[v]<=id[u]+siz[u]-1)swap(u,v);
+        if(id[u]>id[v]&&id[u]>id[v]+siz[v]-1)swap(x,y);
         int uu=LCA(u,x);
         int vv=LCA(uu,v),v1=LCA(uu,y),v2=LCA(v,y);
         if(d[vv]<d[v1])vv=v1;
         if(d[vv]<d[v2])vv=v2;
         res=q2(uu,vv);
-        printf("%d %d:%d %d:%d %d:%d\n",u,v,x,y,uu,vv,res);//
+        //printf("%d %d:%d %d:%d %d:%d\n",u,v,x,y,uu,vv,res);//
         u=uu,v=vv;
         if(ys[1].first-res>=ys[i+1].first){
             ans=min(ans,ys[1].first-res);
