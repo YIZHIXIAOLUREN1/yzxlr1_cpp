@@ -7,14 +7,14 @@ using namespace std;
 #define rs ((u<<1)|1)
 #define mid ((l+r)>>1)
 #define len (r-l+1)
-const ll N=1e4+7,inf=0x3f3f3f3f;
+const ll N=1e4+7,M=5e4+7,QQ=3e4+7,inf=0x3f3f3f3f;
 int n,m,Q;
-int s[3*N],t[3*N];
+int s[QQ],t[QQ];
 int b[N];
 ll w[N*4];
 vector<pr> G[N],Gi[N];
 int id[N],son[N],ffa[N],siz[N],top[N],idx,d[N];
-prr gg[3*N];
+prr gg[M];
 int fa[N];
 
 void dfs1(int u,int fas){
@@ -39,31 +39,21 @@ void dfs2(int u,int tof){
     for(auto ii:Gi[u]){
         int v=ii.first,ww=ii.second;
         if(v==ffa[u])continue;
-        if(v==son[u]){
-        	b[id[son[u]]]=ww;
-        	// printf("%d %d:%d %d\n",u,v,id[son[u]],b[id[son[u]]]);//
-        	continue;
-        }
+        if(v==son[u]){b[id[son[u]]]=ww;continue;}
         id[v]=++idx;
         b[idx]=ww;
         dfs2(v,v);
     }
 }
 
-void pushup(int u){
-	w[u]=min(w[ls],w[rs]);
-	//printf("%d:%d\n",u,w[u]);//
-}
-
+void pushup(int u){w[u]=min(w[ls],w[rs]);}
 void build(int u,int l,int r){
     if(l==r){w[u]=b[l];return;}
     build(ls,l,mid);
     build(rs,mid+1,r);
     pushup(u);
 }
-
 ll query(int u,int l,int r,int L,int R){
-	//printf("%d:%d %d:%d %d\n",u,l,r,L,R);//
 	if(R<L)return inf;
     if(l>R||r<L)return inf;
     if(l>=L&&r<=R)return w[u];
@@ -76,32 +66,27 @@ ll LCA(int x,int y){
 		if(d[top[x]]<d[top[y]]){
 			swap(x,y);
 		}
-		//printf("%d %d:\n",x,y);//
         res=min(res,query(1,1,n,id[top[x]],id[x]));
 		x=ffa[top[x]];
 	}
 	if(d[x]<d[y])swap(x,y);
-	//printf("%d %d:\n",x,y);//
     res=min(res,query(1,1,n,id[son[y]],id[x]));
     return res;
 }
 
 bool cmp(prr x,prr y){return x.first>y.first;}
-
-int find(int x){
-    if(fa[x]==fa[fa[x]])return x;
-    return fa[x]=find(fa[x]);
-}
+int find(int x){return (x==fa[x])?x:fa[x]=find(fa[x]);}
 
 void kru(){
     sort(gg+1,gg+m+1,cmp);
+    for(int i=1;i<=n;i++)fa[i]=i;
     for(int i=1;i<=m;i++){
         int u=gg[i].second.first,v=gg[i].second.second;
         int ww=gg[i].first;
         if(find(u)==find(v))continue;
         Gi[u].push_back({v,ww});
         Gi[v].push_back({u,ww});
-        fa[u]=v;
+        fa[find(u)]=find(v);
     }
 }
 
@@ -116,7 +101,7 @@ int main(){
     }
     cin >> Q;
     for(int i=1;i<=Q;i++)cin >> s[i] >> t[i];
-    
+
     kru();
     memset(b,0x3f,sizeof b);
     memset(w,0x3f,sizeof w);
@@ -127,10 +112,6 @@ int main(){
             dfs2(i,i);
         }
     }
-    //for(int i=1;i<=n;i++){
-    //    printf("%d:%d %d %d:%d %d %d\n",
-    //    i,id[i],son[i],ffa[i],siz[i],top[i],d[i]);//
-    //}
     build(1,1,n);
     for(int i=1;i<=Q;i++){
         if(find(s[i])!=find(t[i])){cout<<"-1\n";continue;}
