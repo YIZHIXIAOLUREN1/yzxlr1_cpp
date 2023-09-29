@@ -6,7 +6,7 @@ using namespace std;
 
 int main(){
     ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
-    cout << (ll)'A' <<" "<<(ll)'a';
+    cout <<0x3f3f3f3f;
     
     return 0;
 }
