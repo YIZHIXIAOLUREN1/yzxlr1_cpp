@@ -16,13 +16,14 @@ int main(){
     f[1][0]=a[1];
     ans=inf;
     for(int i=2;i<=n;i++){
-        for(int j=0;j<i;j++){
-            if(i>j+1)f[i][j]=min(f[i][j],f[i-1][j]+abs(a[i]-a[i-1]));
-            else for(int k=1;k<=j;k++)
-                    f[i][j]=min(f[i][j],f[j][j-k]+abs(a[i]-a[j-k]));
+        for(int j=0;j<=i-2;j++){
+            f[i][j]=min(f[i][j],f[i-1][j]+abs(a[i]-a[i-1]));
             if(i==n)ans=min(ans,f[i][j]);
             //printf("%d %d:%d\n",i,j,f[i][j]);//
         }
+        for(int j=0;j<i-1;j++)
+            f[i][i-1]=min(f[i][i-1],f[i-1][j]+abs(a[i]-a[j]));  
+        if(i==n)ans=min(ans,f[i][i-1]);
     }
     cout << ans;
 }
