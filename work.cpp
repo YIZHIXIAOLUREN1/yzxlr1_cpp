@@ -28,4 +28,4 @@ int main(){
         if(h*h>R)h--;
         cout << h-q << "\n";
     }
-}
+}   
