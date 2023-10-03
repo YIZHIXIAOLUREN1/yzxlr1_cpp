@@ -29,6 +29,8 @@ void dfs2(int u,int fa){
 
 int main(){
     ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    freopen("orient.in","r",stdin);
+    freopen("orient.out","w",stdout);
     cin >> n;
     for(int i=1,u,v;i<=n-1;i++){
         cin >> u >> v;
