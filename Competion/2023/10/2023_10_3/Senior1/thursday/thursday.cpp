@@ -7,8 +7,8 @@ int f[N][M];
 int ans;
 int main(){
     ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
-    freopen("thursday.in","r",stdin);
-    freopen("thursday.out","w",stdout);
+    //freopen("thursday.in","r",stdin);
+    //freopen("thursday.out","w",stdout);
     int T;
     cin >> T;
     while(T--){
