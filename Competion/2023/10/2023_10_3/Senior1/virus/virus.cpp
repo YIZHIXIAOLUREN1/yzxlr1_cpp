@@ -37,8 +37,8 @@ int query(int u,int l,int r,int L,int R){
 
 int main(){
     ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
-    freopen("virus.in","r",stdin);
-    freopen("virus.out","w",stdout);
+    //freopen("virus.in","r",stdin);
+    //freopen("virus.out","w",stdout);
     cin >> n >> m;
     for(int i=1;i<=n;i++){
         cin >> ll[i] >> rr[i] >> kk[i];
