@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define ll long long
-const int N=400,M=1e5+7,NN=316,mod=1e9+7;
+const int N=400,M=1e5+7,mod=1e9+7;
 int n,m;
 int f[N][M];
 int ans;
