@@ -7,7 +7,6 @@ vector<int> G[N];
 int dfn[N],low[N],tot,vis[N];
 int st[N],top,icp[N],tcp;
 vector<int> cp[N];
-int ci[N];
 
 void dfs(int u){
     low[u]=dfn[u]=++tot;
@@ -22,7 +21,6 @@ void dfs(int u){
     }
     if(low[u]==dfn[u]){
         tcp++;
-        //printf("cc%d:%d\n",u,tcp);//
         int vv;
         do{
             vv=st[top--];
@@ -31,7 +29,6 @@ void dfs(int u){
             cp[tcp].push_back(vv);
         }while(vv!=u);
     }
-    //printf("%d:%d %d\n",u,dfn[u],low[u]);//
 }
 
 int main(){
@@ -45,17 +42,5 @@ int main(){
     }
     for(int i=1;i<=n;i++)if(!dfn[i])dfs(i);
 
-    for(int u=1;u<=n;u++){
-        for(auto v:G[u]){
-            if(icp[u]==icp[v])continue;
-            ci[icp[v]]++;
-        }
-    }
-    int ans=0;
-    for(int i=1;i<=tcp;i++){
-    	//printf("c%d:%d %d\n",i,cp[i].size(),ci[i]);//
-        if(!ci[i])ans++;
-    }
-    cout << ans;
     return 0;
 }
