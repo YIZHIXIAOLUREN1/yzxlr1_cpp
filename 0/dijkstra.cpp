@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define MAXN 300000
+#define MAXN 600000
 #define int long long
 #define pr pair<int,int>
 const int inf=2147483647;
@@ -15,27 +15,23 @@ void add(int u,int v,int va){
 	h[u]=cnt;
 }
 
-priority_queue<pr> q;
-
-bool operator <(pr a,pr b){
-	return a.second>b.second;
-}
+priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> q;
 
 void dijkstra(){
 	for(int i=1;i<=n;i++)
 		dis[i]=inf;
 	dis[s]=0;
 	dis[0]=inf;
-	q.push({s,dis[s]});
+	q.push({dis[s],s});
 	while(!q.empty()){
-		int u=q.top().first;
+		int u=q.top().second;
 		q.pop();
 		if(vis[u])continue;
 		vis[u]=1;
 		for(int i=h[u];i;i=nxt[i]){
 			if(dis[u]+val[i]<dis[to[i]]){
 				dis[to[i]]=dis[u]+val[i];
-				q.push({to[i],dis[to[i]]});
+				q.push({dis[to[i]],to[i]});
 			}
 		}
 		
@@ -52,6 +48,6 @@ signed main(){
 	}
 	dijkstra();
 	for(int i=1;i<=n;i++)
-		printf("%d ",dis[i]);
+		printf("%lld ",dis[i]);
 	return 0;
 }
