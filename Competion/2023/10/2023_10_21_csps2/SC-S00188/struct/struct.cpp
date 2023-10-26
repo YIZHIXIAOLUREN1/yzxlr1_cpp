@@ -14,8 +14,8 @@ struct node{
     int id;
     string na;//name
     ll sp;//duiqi
-    ll len;
-    vector<int> son;
+    ll len;//r
+    vector<int> son;//son_id
     vector<int> sst;//son_start
     vector<string> sna;//son_name
 }w[N];
@@ -36,7 +36,7 @@ int main(){
         ni++;
         ll op;
         cin >> op;
-        cout <<op<<":";//
+        //cout <<op<<":";//
         if(op==1)cj1();
         if(op==2)my2();
         if(op==3)fy3();
@@ -47,10 +47,10 @@ int main(){
 
 void csh(){
     node by,st,it,lo;
-    by.id=101;by.sp=1;by.len=1;
-    st.id=102;st.sp=2;st.len=2;
-    it.id=103;it.sp=4;it.len=4;
-    lo.id=104;lo.sp=8;lo.len=8;
+    by.id=101;by.sp=1;by.len=0;
+    st.id=102;st.sp=2;st.len=1;
+    it.id=103;it.sp=4;it.len=3;
+    lo.id=104;lo.sp=8;lo.len=7;
     by.na="byte";st.na="short";
 	it.na="int";lo.na="long";
     w[101]=by;w[102]=st;w[103]=it;w[104]=lo;
@@ -79,8 +79,8 @@ void cj1(){
                 if(res.len||ff)res.len=res.len+v.sp-res.len%v.sp;
                 ff=1;
                 res.sst.push_back(res.len);
-                res.len+=v.len-1;
-                if(ni==11)printf("%d:%d %d:%d %d\n",k,v.sp,v.len,res.sp,res.len);//
+                //if(ni==11)printf("%d:%d %d:%d %d %d\n",k,v.sp,v.len,res.sp,res.len,res.len+v.len);//
+                res.len+=v.len;
                 break;
             }
         }

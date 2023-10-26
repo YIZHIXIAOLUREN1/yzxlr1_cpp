@@ -7,12 +7,14 @@ int n,q,m=3,opt,cnt,szall; map<string,int> mp;
 struct Var{int Type,l,r; string Name;}b[N];
 struct info{int cnt,req,sz; Var son[N];}a[N];
 inline int Next_mtp(int x,int d){return (x+d-1)/d*d;}
+int ni=0;
 signed main(){
-	freopen("struct.in","r",stdin);
-	freopen("struct.out","w",stdout);
+	//freopen("struct.in","r",stdin);
+	//freopen("struct.out","w",stdout);
 	cin>>q,mp["byte"]=0,mp["short"]=1,mp["int"]=2,mp["long"]=3;
 	for (int t=0;t<=3;t++)  a[t].req=a[t].sz=(1<<t);
 	while (q--){
+        ni++;
 		cin>>opt;
 		if (opt==1){
 			string str,Type_Name; info &cur=a[++m];
@@ -23,6 +25,7 @@ signed main(){
 				cur.son[i].l=Next_mtp(cur.sz,a[typ].req);
 				cur.son[i].r=cur.son[i].l+a[typ].sz-1,cur.sz=cur.son[i].r+1;
 				cur.req=max(cur.req,a[cur.son[i].Type].req);
+                if(ni==11)printf("%d:%d %d:%d %d\n",i,cur.son[i].l,cur.son[i].r,cur.req,cur.sz);//
 			}
 			cur.sz=Next_mtp(cur.sz,cur.req);
 			printf("%lld %lld\n",cur.sz,cur.req);
