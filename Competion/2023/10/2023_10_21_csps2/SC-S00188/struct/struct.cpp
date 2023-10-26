@@ -1,20 +1,22 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define ll long long
+#define int long long
 const int N=107;
 const ll inf=0x3f3f3f3f3f3f3f3f;
 int n,ni,k;
-vector<string> zjs;
-vector<int> zji;
-vector<int> zss;
-ll nle;
+vector<string> zjs;//nc_name
+vector<int> zji;//nc_id
+vector<int> zst;//nc_start
+ll nle;//nc_r
 
 bool vis[N];
 struct node{
     int id;
     string na;//name
     ll sp;//duiqi
-    ll len;//r
+    ll r;
+    ll len;//dqr
     vector<int> son;//son_id
     vector<int> sst;//son_start
     vector<string> sna;//son_name
@@ -27,7 +29,7 @@ void my2();
 void fy3();
 void dj4();
 
-int main(){
+signed main(){
     //freopen("struct.in","r",stdin);
     //freopen("struct.out","w",stdout);
     csh();
@@ -85,6 +87,7 @@ void cj1(){
             }
         }
     }
+    res.r=res.len;
     res.len=res.len+res.sp-res.len%res.sp-1;
     w[res.id]=res;
     cout << res.len+1 <<" "<<res.sp<<"\n";
@@ -101,8 +104,8 @@ void my2(){
             zji.push_back(v.id);
             if(nle)nle=nle+v.sp-nle%v.sp;
             cout << nle <<"\n";
-            zss.push_back(nle);
-            nle+=v.len-1;
+            zst.push_back(nle);
+            nle+=v.len;
             break;
         }
     }
@@ -117,11 +120,9 @@ void fy3(){
     for(int i=0;i<=s.size();i++){
         if(i<s.size()&&s[i]!='.')ns+=s[i];
         else if(!f1){
-        	//cout << ns<<"\n";//
             for(int j=0;j<zjs.size();j++){
-                string t=zjs[j];
-                if(ns==t){
-                    res=zss[j];
+                if(ns==zjs[j]){
+                    res=zst[j];
                     v=w[zji[j]];
                     break;
                 }
@@ -129,12 +130,8 @@ void fy3(){
             ns.clear();
             f1=1;
         }else{
-        	//cout << ns<<"\n";//
             for(int j=0;j<v.sna.size();j++){
-                string s=v.sna[j];
-                bool f=1;
-                if(ns!=s)f=0;
-                if(f){
+                if(ns==v.sna[j]){
                     res=res+v.sst[j];
                     v=w[v.son[j]];
                 }
@@ -147,54 +144,32 @@ void fy3(){
 
 
 void dj4(){
-	string ans="                                                            ";
-	ll alen=-1;
+	string ans;
+    ans.clear();
     ll adr;
     cin>>adr;
     ll res=0,f1=0;
     node v;
     ll l=0;
-    for(;l<zji.size();l++){
-    	//printf("%d:%d\n",l,zss[l]);//
-    	if(zss[l]>adr){
-    		l--;
-    		break;
-		}
-	}
-	if(l==zji.size())l--;
-	if(l<0)cout <<"ERR\n";
-	for(int i=0;i<zjs[l].size();i++){
-		if(zjs[l][i]!=' '){
-			ans[++alen]=zjs[l][i];
-		}
-		else break;
-	}
-    res=zss[l];
+    for(;l<zji.size();l++)if(zst[l]>adr)break;
+	l--;
+
+	if(l<0){cout <<"ERR\n";return;}
+    ans+=zjs[l];
+    res=zst[l];
     v=w[zji[l]];
-    //printf("%d:%d:%d\n",zji[l],l,v.sst.size());//
+
     while(v.son.size()){
-        for(int i=0;i<v.son.size();i++){
-        	//printf("%d:%d\n",i,res+v.sst[i]);//
-            if(res+v.sst[i]>adr){
-                l=i-1;
-                break;
-            }
-            l=i;
-        }
-        ans[++alen]='.';
-        for(int i=0;i<v.sna[l].size();i++){
-			if(v.sna[l][i]!=' ')ans[++alen]=v.sna[l][i];
-			else break;
-		}
+        l=0;
+        for(;l<v.son.size();l++)if(res+v.sst[l]>adr)break;
+        l--;
+        if(l<0){cout <<"ERR\n";return;}
+        ans+=".";
+        ans+=v.sna[l];
         res=res+v.sst[l];
         v=w[v.son[l]];
-        //printf("%d:%d\n",l,res);//
-        if(l<0||res+v.len-1<adr){
-            cout <<"ERR\n";
-            return;
-        }
+        if(res+v.len<adr){cout <<"ERR\n";return;}
     }
-    for(int i=0;i<ans.size();i++)if(ans[i]!=' ')cout<<ans[i];
-    cout <<"\n";
-    //cout << res <<"\n";//
+    cout << ans<<"\n";
+
 }
