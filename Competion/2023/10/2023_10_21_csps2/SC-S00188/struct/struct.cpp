@@ -12,12 +12,12 @@ ll nle;
 bool vis[N];
 struct node{
     int id;
-    string na;
-    ll sp;
+    string na;//name
+    ll sp;//duiqi
     ll len;
     vector<int> son;
-    vector<int> sss;
-    vector<string> sna;
+    vector<int> sst;//son_start
+    vector<string> sna;//son_name
 }w[N];
 
 
@@ -59,7 +59,6 @@ void csh(){
 
 void cj1(){
     string s;int k;
-    //s=si();
     cin>>s;
     cin>>k;
     node res;
@@ -79,8 +78,9 @@ void cj1(){
                 res.sp=max(res.sp,v.sp);
                 if(res.len||ff)res.len=res.len+v.sp-res.len%v.sp;
                 ff=1;
-                res.sss.push_back(res.len);
+                res.sst.push_back(res.len);
                 res.len+=v.len-1;
+                if(ni==11)printf("%d:%d %d:%d %d\n",k,v.sp,v.len,res.sp,res.len);//
                 break;
             }
         }
@@ -135,7 +135,7 @@ void fy3(){
                 bool f=1;
                 if(ns!=s)f=0;
                 if(f){
-                    res=res+v.sss[j];
+                    res=res+v.sst[j];
                     v=w[v.son[j]];
                 }
             }
@@ -171,11 +171,11 @@ void dj4(){
 	}
     res=zss[l];
     v=w[zji[l]];
-    //printf("%d:%d:%d\n",zji[l],l,v.sss.size());//
+    //printf("%d:%d:%d\n",zji[l],l,v.sst.size());//
     while(v.son.size()){
         for(int i=0;i<v.son.size();i++){
-        	//printf("%d:%d\n",i,res+v.sss[i]);//
-            if(res+v.sss[i]>adr){
+        	//printf("%d:%d\n",i,res+v.sst[i]);//
+            if(res+v.sst[i]>adr){
                 l=i-1;
                 break;
             }
@@ -186,7 +186,7 @@ void dj4(){
 			if(v.sna[l][i]!=' ')ans[++alen]=v.sna[l][i];
 			else break;
 		}
-        res=res+v.sss[l];
+        res=res+v.sst[l];
         v=w[v.son[l]];
         //printf("%d:%d\n",l,res);//
         if(l<0||res+v.len-1<adr){
