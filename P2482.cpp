@@ -42,15 +42,18 @@ void dead(int user,int reser){
 void tf(int user,int reser){//跳
     if(kw[reser])kw[user]=1;
 }
-bool gx(int user,int reser,int rreser,int way){//是否可动
-    if(!kw[reser])return 0;
+bool gx(int user,int reser,int rreser,int way){//是否无懈
+    if(kw[reser]==0)return 0;
     if(way==2||way==0){//4,5,dy
         if(bel[rreser]==0&&(bel[reser]==0||bel[reser]==1))return 1;
         if(bel[rreser]==1&&(bel[reser]==0||bel[reser]==1))return 1;
         if(bel[rreser]==2&&bel[reser]==2)return 1;
     }else{
-        if(bel[rreser]==0&&(bel[reser]))
+        if(bel[rreser]==0&&(bel[reser]==2||(kw[reser]==2)))return 1;
+        if(bel[rreser]==1&&(bel[reser]==2))return 1;
+        if(bel[rreser]==2&&(bel[reser]==1||bel[reser]==0))return 1;
     }
+    return 0;
 }
 bool wx(int user,int reser,int way){//way,0,dy,1,yq,2,zdy
     for(int rreser=user;rreser!=user;rreser=r[rreser]){
