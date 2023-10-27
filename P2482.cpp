@@ -6,7 +6,9 @@ int n,m;
 int tcd[M],toc;//totcard
 queue<int> hdcd[N];//handcard
 //P桃0,K杀1,D闪2,F决3,N南4,W万5,J无懈6,Z连弩7
-int bld[N],bel[N],kw[N];//blood,belong,know(0,unkonw,1,z,2,f,3,lf)
+int bld[N],bel[N],kw[N];//blood,belong,(0,zhu,1,zhong,2,f)
+//know(0,unknow,1,know,2,lf)
+bool zb[N];
 bool die[N];
 int l[N],r[N];
 
@@ -24,30 +26,63 @@ void gcd(int id,int num){//getcard
     }
 }
 void dead(int user,int reser){
+    if(!hdcd[reser].empty()&&hdcd[reser].front()==0){
+        bld[reser]++;
+        hdcd[reser].pop();
+        return;
+    }
     die[reser]=1;
     if(bel[reser]==2){
         gcd(user,3);
     }else if(bel[user]==0&&bel[reser]==1){
-        while(!hdcd[reser].empty())hdcd[reser].pop();
+        while(!hdcd[user].empty())hdcd[user].pop();
+        zb[user]=0;
     }
 }
-void dy(int user,int reser){//敌意
+void tf(int user,int reser){//跳
+    if(kw[reser])kw[user]=1;
+}
+bool gx(int user,int reser,int rreser,int way){//是否可动
+    if(!kw[reser])return 0;
+    if(way==2||way==0){//4,5,dy
+        if(bel[rreser]==0&&(bel[reser]==0||bel[reser]==1))return 1;
+        if(bel[rreser]==1&&(bel[reser]==0||bel[reser]==1))return 1;
+        if(bel[rreser]==2&&bel[reser]==2)return 1;
+    }else{
+        if(bel[rreser]==0&&(bel[reser]))
+    }
+}
+bool wx(int user,int reser,int way){//way,0,dy,1,yq,2,zdy
+    for(int rreser=user;rreser!=user;rreser=r[rreser]){
+        if(hdcd[rreser].empty()||hdcd[rreser].front()!=6)continue;
 
+
+    }
 }
 void use(int id,int user,int reser){//id,来源,目标
     if(id==0){
         bld[user]=min(bld[user],4);
     }else if(id==1){
         //kw[user][reser]=2;
-        if(hdcd[reser].front()==2){
+        if(!hdcd[reser].empty()&&hdcd[reser].front()==2){
             hdcd[reser].pop();
         }else{
             bld[reser]--;
-            if(bld[reser]==0){
-                if(hdcd[reser].front()==0)bld[reser]++,hdcd[reser].pop();
-                else dead(user,reser);
-            }
+            if(bld[reser]==0)dead(user,reser);
+            tf(user,reser);
         }
+    }else if(id==3){//!!!!
+        int now=reser,bn=user;
+        while(!hdcd[now].empty()&&hdcd[now].front()==1){
+            hdcd[now].pop();
+            now=(now==user)?reser:user;
+            bn=(now==user)?reser:user;
+        }
+        tf(bn,now);
+        bld[now]--;
+        if(bld[now]==0)dead(bn,now);
+    }else if(id==4){
+
     }
 }
 
