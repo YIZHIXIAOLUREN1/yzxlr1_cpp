@@ -58,21 +58,24 @@ bool gx(int user,int reser,int rreser,int way){//是否无懈
 bool wx(int user,int reser,int way){//way,0,dy,1,yq,2,zdy
     for(int rreser=user;rreser!=user;rreser=r[rreser]){
         if(hdcd[rreser].empty()||hdcd[rreser].front()!=6)continue;
-
-
+        if(!gx(user,reser,rreser,way))continue;
+        return use(6,rreser,reser);
     }
 }
-void use(int id,int user,int reser){//id,来源,目标
+bool use(int id,int user,int reser){//id,来源,目标
     if(id==0){
         bld[user]=min(bld[user],4);
+        return 1;
     }else if(id==1){
         //kw[user][reser]=2;
         if(!hdcd[reser].empty()&&hdcd[reser].front()==2){
             hdcd[reser].pop();
+            return 0;
         }else{
             bld[reser]--;
             if(bld[reser]==0)dead(user,reser);
             tf(user,reser);
+            return 1;
         }
     }else if(id==3){//!!!!
         int now=reser,bn=user;
