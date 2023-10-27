@@ -79,10 +79,10 @@ bool wx(int user,int reser,int way){//way,0,dy,1,yq,2,zdy
     for(int rreser=user;rreser!=user;rreser=r[rreser]){
         if(!find(rreser,6))continue;
         if(!gx(user,reser,rreser,way))continue;
-        return use(6,rreser,reser);
+        return use(6,rreser,reser,way);
     }
 }
-bool use(int id,int user,int reser){//id,来源,目标
+bool use(int id,int user,int reser,int way){//id,来源,目标
     if(id==0){
         bld[user]=min(bld[user],4);
         return 1;
@@ -95,7 +95,8 @@ bool use(int id,int user,int reser){//id,来源,目标
             tf(user,reser);
             return 1;
         }
-    }else if(id==3){//!!!!
+    }else if(id==3){
+        if(wx(user,reser,0))return 0;
         int now=reser,bn=user;
         if(bel[reser]!=1||bel[user]!=0){
             while(fius(now,1)){
@@ -106,7 +107,14 @@ bool use(int id,int user,int reser){//id,来源,目标
         tf(bn,now);
         bld[now]--;
         if(bld[now]==0)dead(bn,now);
+        return 1;
     }else if(id==4){
+
+    }else if(id==5){
+
+    }else if(id==6){
+        if(wx(user,reser,))
+    }else{
 
     }
 }
