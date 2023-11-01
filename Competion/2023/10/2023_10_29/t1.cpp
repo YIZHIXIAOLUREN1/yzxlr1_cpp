@@ -7,7 +7,7 @@ struct node{
 }a[N];
 int n;
 int tot,b[N];
-int jc[N],inv[N];
+int jc[N];
 int ans;
 //num_of_num,tot_of_num,num_to_num
 
@@ -23,15 +23,14 @@ int qp(int x,int q){
 int inv1(int x){return qp(x,mod-2);}
 void pre(){
     jc[0]=1;
-    for(int i=1;i<=500001;i++){
+    for(int i=1;i<=N-1;i++){
         jc[i]=1ll*jc[i-1]*i%mod;
-        inv[i]=inv1(i);
     }
 }
 
 int C(int n,int m){
 	if(n==m||m==0||n==0)return 1;
-    return 1ll*jc[n]*inv[jc[m]]%mod*inv[jc[n-m]]%mod;
+    return 1ll*jc[n]*inv1(jc[m])%mod*inv1(jc[n-m])%mod;
 }
 
 int main(){
@@ -63,7 +62,7 @@ int main(){
             }
             if(res==0)res=1;
             //printf("%d\n",res);//
-            res=1ll*res*inv[jc[x/y]]%mod*qp(jc[y-1],x/y)%mod;
+            res=1ll*res*inv1(jc[x/y])%mod*qp(jc[y-1],x/y)%mod;
             if(y==1)res=1;
             ans=1ll*ans*res%mod;
         }
