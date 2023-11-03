@@ -30,6 +30,7 @@ void fy3();
 void dj4();
 
 signed main(){
+    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     //freopen("struct.in","r",stdin);
     //freopen("struct.out","w",stdout);
     csh();
