@@ -92,17 +92,19 @@ void cj1(){
     w[res.id]=res;
     cout << res.len+1 <<" "<<res.sp<<"\n";
 }
-
+bool fff=0;
 void my2(){
     string t,tn;
     cin>>t>>tn;
+    
     for(int i=104;i>=1;i--){
         if(!vis[i])continue;
         node v=w[i];
         if(v.na==t){
             zjs.push_back(tn);
             zji.push_back(v.id);
-            if(nle)nle=nle+v.sp-nle%v.sp;
+            if(nle||fff)nle=nle+v.sp-nle%v.sp;
+            fff=1;
             cout << nle <<"\n";
             zst.push_back(nle);
             nle+=v.len;
@@ -158,7 +160,7 @@ void dj4(){
     ans+=zjs[l];
     res=zst[l];
     v=w[zji[l]];
-
+	if(res+v.len<adr){cout <<"ERR\n";return;}
     while(v.son.size()){
         l=0;
         for(;l<v.son.size();l++)if(res+v.sst[l]>adr)break;
@@ -170,6 +172,7 @@ void dj4(){
         v=w[v.son[l]];
         if(res+v.len<adr){cout <<"ERR\n";return;}
     }
+    if(v.id<=100){cout <<"ERR\n";return;}
     cout << ans<<"\n";
 
 }
