@@ -4,17 +4,17 @@ using namespace std;
 const int N=2e6+7;
 int n;
 ll ans;
-struct node1{
+struct node{
     int l,r,id;
 }a[N];
 struct node1{
     int l,r,id;
-    friend bool operator <(node1 x,node1 y){return x.r>y.r;}
-}
+};
+bool operator <(node1 x,node1 y){return x.r<y.r;}
 struct node2{
     int l,r,id;
-    friend bool operator <(node2 x,node2 y){return x.l<y.l;}
 };
+bool operator <(node2 x,node2 y){return x.l>y.l;}
 bool vis[N];
 priority_queue<node1> q1;
 priority_queue<node2> q2;
@@ -35,6 +35,18 @@ int main(){
         if(q1.empty()||q2.empty())break;
         node1 x=q1.top();node2 y=q2.top();
         q1.pop();q2.pop();
+        vis[x.id]=vis[y.id]=1;
+        if(x.id==y.id){
+        	while(!q1.empty()&&vis[q1.top().id])q1.pop();
+            while(!q2.empty()&&vis[q2.top().id])q2.pop();
+            if(q1.empty()||q2.empty())break;
+            if(q1.top().r-x.l>x.r-q2.top().l){
+                x=q1.top();q1.pop();
+            }else{
+                y=q2.top();q2.pop();
+            }
+        }
+        //printf("%d:%d\n",x.id,y.id);//
         ans+=x.r-y.l;
     }
     cout << ans;
