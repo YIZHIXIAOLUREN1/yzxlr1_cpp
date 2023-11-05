@@ -4,16 +4,10 @@ using namespace std;
 const int N=2e6+7;
 int n;
 ll ans;
-struct node{
-    int l,r,id;
-}a[N];
-struct node1{
-    int l,r,id;
-};
+struct node{int l,r,id;}a[N];
+struct node1{int l,r,id;};
+struct node2{int l,r,id;};
 bool operator <(node1 x,node1 y){return x.r<y.r;}
-struct node2{
-    int l,r,id;
-};
 bool operator <(node2 x,node2 y){return x.l>y.l;}
 bool vis[N];
 priority_queue<node1> q1;
@@ -39,13 +33,13 @@ int main(){
         if(x.id==y.id){
         	while(!q1.empty()&&vis[q1.top().id])q1.pop();
             while(!q2.empty()&&vis[q2.top().id])q2.pop();
-            if(q1.empty()||q2.empty())break;
-            if(q1.top().r-x.l>x.r-q2.top().l){
-                x=q1.top();q1.pop();
-            }else{
-                y=q2.top();q2.pop();
-            }
+            if(q1.empty()&&!q2.empty()){y=q2.top();q2.pop();}
+            else if(q2.empty()&&!q1.empty()){x=q1.top();q1.pop();}
+            else if(q1.empty()||q2.empty())break;
+            else if(q1.top().r-x.l>x.r-q2.top().l){x=q1.top();q1.pop();}
+            else{y=q2.top();q2.pop();}
         }
+        vis[x.id]=vis[y.id]=1;
         //printf("%d:%d\n",x.id,y.id);//
         ans+=x.r-y.l;
     }
