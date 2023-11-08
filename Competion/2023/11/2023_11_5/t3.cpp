@@ -2,8 +2,8 @@
 using namespace std;
 #define ll long long
 const int N=2e5+7;
-int n,K,D;
-int t[N];
+ll K,D;
+int n,t[N];
 ll h[N],f[N];
 
 ll val(int a,int b){
