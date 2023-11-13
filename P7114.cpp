@@ -77,7 +77,7 @@ int main(){
                 int k=i*j,lk=(i-1)*j;
                 ll nt1=(s1[k]-s1[lk]+mod1)%mod1*np1[lk]%mod1;
                 ll nt2=(s2[k]-s2[lk]+mod2)%mod2*np2[lk]%mod2;
-                //printf("%d:%d:%lld %lld:%lld %lld\n",i,j,st1,nt1,st2,nt2);//
+                printf("%d:%d:%lld %lld:%lld %lld\n",i,j,st1,nt1,st2,nt2);//
                 if(nt1!=st1||nt2!=st2)break;
                 ans+=pr[hjs[k+1]][i-1];
             }
