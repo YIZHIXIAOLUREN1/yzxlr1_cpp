@@ -6,5 +6,5 @@ ll n,a[N],ans;
 
 int main(){
     ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
-    cout<<(int)' ';
+    cout<<(int)'m'-'a'<<" "<<(int)'l'-'a';
 }
