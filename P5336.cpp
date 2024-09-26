@@ -29,7 +29,7 @@ int qi(int u,int l,int r,int L,int R){
 }
 
 int main(){
-    //ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     memset(mi,0x3f,sizeof mi);
     cin >> n >> A >> B;
     for(int i=1;i<=n;i++)cin>>w[i];
@@ -42,7 +42,7 @@ int main(){
             for(int k=i;k<j;k++){
                 f[i][j]=min(f[i][j],f[i][k]+f[k+1][j]);
             }
-            printf("%d %d:%d\n",i,j,f[i][j]);//
+            //printf("%d %d:%d\n",i,j,f[i][j]);//
         }
     }
     cout<<f[1][n];
