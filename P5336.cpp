@@ -6,7 +6,7 @@ using namespace std;
 #define mid ((l+r)>>1)
 const int N=57,inf=0x3f3f3f3f;
 int n,A,B,w[N];
-int f[N][N][N];
+int f[N][N];
 int ma[N*2],mi[N*2];
 
 void pushup(int u){ma[u]=max(ma[ls],ma[rs]);mi[u]=min(mi[ls],mi[rs]);}
@@ -32,13 +32,18 @@ int main(){
     ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     memset(mi,0x3f,sizeof mi);
     cin >> n >> A >> B;
-    for(int i=1;i<=n;i++){
-        cin>>w[i];
-    }
-
+    for(int i=1;i<=n;i++)cin>>w[i];
+    build(1,1,n);
     for(int len=1;len<=n;len++){
-        for(int)
+        for(int i=1;i<=n+1-len;i++){
+            int j=i+len-1;
+            int qma=qa(1,1,n,i,j),qmi=qi(1,1,n,i,j);
+            f[i][j]=A+B*(qma-qmi)*(qma-qmi);
+            for(int k=i;k<j;k++){
+                f[i][j]=min(f[i][j],f[i][k]+f[k+1][j]);
+            }
+        }
     }
-    
+    cout<<f[1][n];
     return 0;
 }
