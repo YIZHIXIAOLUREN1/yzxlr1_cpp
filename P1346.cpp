@@ -18,15 +18,15 @@ void dij(){
         if(vis[u])continue;
         vis[u]=1;
         for(auto v:G[u]){
-        	//printf("%d:%d:%d %d\n",u,v,dis[u],dis[v]);//
             if(dis[v]<dis[u]+1)continue;
+            //printf("%d:%d:%d %d:%d %d\n",u,v,dis[u],dis[v],ans[u],ans[v]);//
             if(dis[v]>dis[u]+1){
                 dis[v]=dis[u]+1;
-                ans[v]=1;
+                ans[v]=ans[u];
             }else{
-                ans[v]=(ans[v]+1)%mod;
+                ans[v]=(ans[v]+ans[u])%mod;
             }
-            q.push(make_pair(dis[v],v));
+            q.push(make_pair(-dis[v],v));
             vis[v]=0;
         }
     }
@@ -42,8 +42,7 @@ int main(){
     }
     dij();
     for(int i=1;i<=n;i++){
-        if(ans[i]==inf)cout<<"-1\n";
-        else cout<<ans[i]%mod<<"\n";
+        cout<<ans[i]%mod<<"\n";
     }
     return 0;
 }
