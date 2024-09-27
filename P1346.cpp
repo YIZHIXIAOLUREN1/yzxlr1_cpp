@@ -19,12 +19,14 @@ void dij(){
         if(vis[u])continue;
         vis[u]=1;
         for(auto v:G[u]){
+            if(dis[v]<dis[u]+1)continue;
             if(dis[v]>dis[u]+1){
                 dis[v]=dis[u]+1;
                 ans[v]=1;
-            }else if(dis[v]==dis[u]+1){
+            }else{
                 ans[v]++;
             }
+            q.push(make_pair(dis[v],v));
         }
     }
 }
@@ -38,6 +40,9 @@ int main(){
         G[v].push_back(u);
     }
     dij();
-    
+    for(int i=1;i<=n;i++){
+        if(ans[i]==inf)cout<<"-1\n";
+        else cout<<ans[i]<<"\n";
+    }
     return 0;
 }
