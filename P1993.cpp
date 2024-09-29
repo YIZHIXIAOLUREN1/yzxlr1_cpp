@@ -16,16 +16,14 @@ bool spfa(){
     while(!q.empty()){
         int u=q.front();
         q.pop();
-        if(vis[u])continue;
-        vis[u]=1;
+        vis[u]=0;
         for(auto pa:G[u]){
             int v=pa.first,s=pa.second;
             if(dis[v]>dis[u]+s){
                 dis[v]=dis[u]+s;
                 cnt[v]=cnt[u]+1;
                 if(cnt[v]>=n)return 0;
-                vis[v]=0;
-                q.push(v);
+                if(!vis[v]){vis[v]=1;q.push(v);}
             }
         }
     }
