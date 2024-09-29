@@ -7,7 +7,7 @@ int fa[N];
 pair<int,pair<int,int>> G[M];
 
 bool cmp(pair<int,pair<int,int>> a,pair<int,pair<int,int>> b){
-    return a.first>b.first;
+    return a.first<b.first;
 }
 
 int find(int x){return (fa[x]==x)?x:fa[x]=find(fa[x]);}
