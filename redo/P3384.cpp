@@ -15,7 +15,7 @@ void pushup(int u){W[u]=W[ls]+W[rs];}
 
 void build(int u,int l,int r){
     if(l==r){
-        W[u]=T[ran[l]];
+        W[u]=T[ran[l]]%mod;
         return;
     }
     build(ls,l,mid);
@@ -78,7 +78,7 @@ void dfs2(int u,int to){
 
 int LCA(int u,int v){
     while(top[u]!=top[v]){
-        if(d[u]<d[v])swap(u,v);
+        if(d[top[u]]<d[top[v]])swap(u,v);
         u=fa[top[u]];
     }
     if(d[u]<d[v])swap(u,v);
@@ -87,7 +87,7 @@ int LCA(int u,int v){
 
 void cgLCA(int u,int v,ll jj){
     while(top[u]!=top[v]){
-        if(d[u]<d[v])swap(u,v);
+        if(d[top[u]]<d[top[v]])swap(u,v);
         cg(1,1,n,dfn[top[u]],dfn[u],jj);
         u=fa[top[u]];
     }
@@ -98,7 +98,7 @@ void cgLCA(int u,int v,ll jj){
 ll quLCA(int u,int v){
     ll res=0;
     while(top[u]!=top[v]){
-        if(d[u]<d[v])swap(u,v);
+        if(d[top[u]]<d[top[v]])swap(u,v);
         res=(res+qu(1,1,n,dfn[top[u]],dfn[u]))%mod;
         u=fa[top[u]];
     }
@@ -111,7 +111,7 @@ void cgs(int u,ll jj){cg(1,1,n,dfn[u],dfn[u]+siz[u]-1,jj);}
 ll qus(int u){return qu(1,1,n,dfn[u],dfn[u]+siz[u]-1);}
 
 int main(){
-    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    //ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     cin >> n >> m >> root >> mod;
     for(int i=1;i<=n;i++)cin >> T[i];
     for(int i=1,u,v;i<n;i++){
@@ -122,23 +122,24 @@ int main(){
     fa[root]=0,d[root]=1;
     dfs1(root);
     dfs2(root,root);
-
+	build(1,1,n);
     while(m--){
         ll ty,x,y,z;
         cin >> ty;
         if(ty==1){
             cin >> x >> y >> z;
-            cgLCA(x,y,z);
+            cgLCA(x,y,z%mod);
         }else if(ty==2){
             cin >> x >> y;
             cout<<quLCA(x,y)<<"\n";
         }else if(ty==3){
             cin >> x >> z;
-            cgs(x,z);
+            cgs(x,z%mod);
         }else{
             cin >> x;
             cout<<qus(x)<<"\n";
         }
+        //for(int i=1;i<=n;i++)cout<<qu(1,1,n,dfn[i],dfn[i])<<" \n"[i==n];//
     }
     
     return 0;
