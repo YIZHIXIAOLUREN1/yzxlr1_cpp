@@ -3,19 +3,34 @@ using namespace std;
 const int N=102;
 int n;
 string line,base_def="#define",base_udf="#undef";
-map<string,string> def;
-map<string,bool> bdf;
+map<string,pair<string,bool>> def;
+map<string,int> iszk;
 
-string getname(int si){
-    string res;
-    while(si<line.size()&&(line[si]=='_'||('A'<=line[si]&&line[si]<='Z')
-    ||('a'<=line[si]&&line[si]<='z')
-    ||('0'<=line[si]&&line[si]<='9'))){
-        res+=line[si];si++;
+string cts(int si){string res;res+=line[si];return res;}
+bool check_name(string &x){
+    bool res=1;
+    for(int si=0;si<x.size();si++){
+        if(x[si]=='_'||('A'<=x[si]&&x[si]<='Z')
+        ||('a'<=x[si]&&x[si]<='z')
+        ||('0'<=x[si]&&x[si]<='9'))continue;
+        res=0;break;
     }
     return res;
 }
-
+bool check_una(int si,string &s){
+    return !(s[si]=='_'||('A'<=s[si]&&s[si]<='Z')
+    ||('a'<=s[si]&&s[si]<='z')
+    ||('0'<=s[si]&&s[si]<='9'));
+}
+string getname(int &si,string &s){
+    string res;
+    while(si<s.size()&&(s[si]=='_'||('A'<=s[si]&&s[si]<='Z')
+    ||('a'<=s[si]&&s[si]<='z')
+    ||('0'<=s[si]&&s[si]<='9'))){
+        res+=s[si];si++;
+    }
+    return res;
+}
 bool check_def(){
     if(line.size()<=7)return 0;
     for(int i=0;i<base_def.size();i++)if(line[i]!=base_def[i])return 0;
@@ -24,11 +39,9 @@ bool check_def(){
     while(line[ni]!=' '){name+=line[ni];ni++;}
     ni++;
     for(;ni<line.size();ni++)content+=line[ni];
-    def[name]=content;
-    bdf[name]=1;
+    def[name]={content,1};
     return 1;
 }
-
 bool check_udf(){
     if(line.size()<=6)return 0;
     for(int i=0;i<base_udf.size();i++)if(line[i]!=base_udf[i])return 0;
@@ -37,7 +50,7 @@ bool check_udf(){
     while(line[ni]!=' '){name+=line[ni];ni++;}
     ni++;
     for(;ni<line.size();ni++)content+=line[ni];
-    bdf[name]=0;
+    def[name]={def[name].first,0};
     return 1;
 }
 vector<string> l1,l2;
@@ -51,18 +64,56 @@ void zk(){
     tot1=tot2=0;
     int si=0;
     while(si<line.size()){
-        string nst=getname(si);
+        string nst=getname(si,line);
         puin(l1,nst,tot1);
+        while(si<line.size()&&check_una(si,line)){
+            puin(l1,cts(si),tot1);
+            si++;
+        }
+    }
+    for(int i=tot1-1;i>=0;i--)puin(l2,l1[i],tot2);
+    while(tot2){
+        string now=l2[tot2-1];
+        if(!check_name(now)){cout<<now;tot2--;continue;}
+        bool isz=0;
+        tot2--;
+        for(auto s1:def){
+            string cname=s1.first,ccontent=s1.second.first;
+            if(s1.second.second==0)continue;
+            if(now==cname){
+                if(iszk.find(now)!=iszk.end()
+                &&iszk[now]<tot2)continue;
+                iszk[now]=tot2-1;
+                int ni=0;
+                tot1=0;
+                while(ni<now.size()){
+                    string nst=getname(ni,now);
+                    puin(l1,nst,tot1);
+                    while(ni<now.size()&&check_una(ni,now)){
+                        puin(l1,cts(ni),tot1);
+                        ni++;
+                    }
+                }
+                for(int i=tot1-1;i>=0;i--)puin(l2,l1[i],tot2);
+                tot1=0;
+                isz=1;
+                break;
+            }
+        }
+        if(isz)cout<<now;
     }
 }
-
 int main(){
     ios::sync_with_stdio(0);cin.tie(0);
     cin >> n;
     while(n--){
+        string hh;
         getline(cin,line);
-        if(check_def())continue;
-        if(check_udf())continue;
+        getline(cin,hh);
+        if(check_def()){cout<<"\n";continue;}
+        if(check_udf()){cout<<"\n";continue;}
+        zk();
+        cout<<"\n";
     }
     
     
