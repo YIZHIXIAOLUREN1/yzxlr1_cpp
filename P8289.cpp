@@ -35,18 +35,19 @@ bool check_def(){
     if(line.size()<=7)return 0;
     for(int i=0;i<base_def.size();i++)if(line[i]!=base_def[i])return 0;
     string name,content;
-    int ni=9;
+    int ni=8;
     while(line[ni]!=' '){name+=line[ni];ni++;}
     ni++;
     for(;ni<line.size();ni++)content+=line[ni];
     def[name]={content,1};
+    iszk[name]=1000;
     return 1;
 }
 bool check_udf(){
     if(line.size()<=6)return 0;
     for(int i=0;i<base_udf.size();i++)if(line[i]!=base_udf[i])return 0;
     string name,content;
-    int ni=8;
+    int ni=7;
     while(line[ni]!=' '){name+=line[ni];ni++;}
     ni++;
     for(;ni<line.size();ni++)content+=line[ni];
@@ -73,49 +74,55 @@ void zk(){
     }
     for(int i=tot1-1;i>=0;i--)puin(l2,l1[i],tot2);
     while(tot2){
+    	for(int i=tot2-1;i>=0;i--)cout<<l2[i]<<endl;//
+        cout<<endl;//
         string now=l2[tot2-1];
-        if(!check_name(now)){cout<<now;tot2--;continue;}
+        if(!check_name(now)){cout<<now<<endl<<endl;tot2--;continue;}
         bool isz=0;
-        tot2--;
         for(auto s1:def){
             string cname=s1.first,ccontent=s1.second.first;
             if(s1.second.second==0)continue;
             if(now==cname){
-                if(iszk.find(now)!=iszk.end()
-                &&iszk[now]<tot2)continue;
+                if(iszk[now]<tot2)continue;
+                cout<<now<<":"<<ccontent<<endl;
                 iszk[now]=tot2-1;
+                now=ccontent;
+                cout<<now<<endl;
                 int ni=0;
                 tot1=0;
                 while(ni<now.size()){
                     string nst=getname(ni,now);
+                    cout<<nst<<endl;
                     puin(l1,nst,tot1);
                     while(ni<now.size()&&check_una(ni,now)){
                         puin(l1,cts(ni),tot1);
                         ni++;
                     }
                 }
+                cout<<l1[0]<<endl<<endl;
+                tot2--;
                 for(int i=tot1-1;i>=0;i--)puin(l2,l1[i],tot2);
                 tot1=0;
                 isz=1;
                 break;
             }
         }
-        if(isz)cout<<now;
+        if(!isz){cout<<now<<endl<<endl;tot2--;}
     }
 }
 int main(){
-    ios::sync_with_stdio(0);cin.tie(0);
+    //ios::sync_with_stdio(0);cin.tie(0);
     cin >> n;
+    getline(cin,line);
     while(n--){
-        string hh;
         getline(cin,line);
-        getline(cin,hh);
         if(check_def()){cout<<"\n";continue;}
         if(check_udf()){cout<<"\n";continue;}
         zk();
+        for(auto st:iszk)st.second=1000;
         cout<<"\n";
     }
-    
+    for(auto st:def)cout<<st.first<<" "<<st.second.first<<" "<<st.second.second<<"\n";
     
     return 0;
 }
