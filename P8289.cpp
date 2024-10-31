@@ -5,8 +5,10 @@ int n;
 string line,base_def="#define",base_udf="#undef";
 map<string,pair<string,bool>> def;
 map<string,int> iszk;
+pair<int,string> qq[100007];
+int tq=0;
 
-string cts(int si){string res;res+=line[si];return res;}
+string cts(int si,string &s){string res;res+=s[si];return res;}
 bool check_name(string &x){
     bool res=1;
     for(int si=0;si<x.size();si++){
@@ -40,7 +42,7 @@ bool check_def(){
     ni++;
     for(;ni<line.size();ni++)content+=line[ni];
     def[name]={content,1};
-    iszk[name]=1000;
+    iszk[name]=100007;
     return 1;
 }
 bool check_udf(){
@@ -61,6 +63,7 @@ void puin(vector<string> &li,string x,int &tot){
     if(tot<li.size())li[++tot-1]=x;
     else{li.push_back(x);tot++;}
 }
+
 void zk(){
     tot1=tot2=0;
     int si=0;
@@ -68,38 +71,50 @@ void zk(){
         string nst=getname(si,line);
         puin(l1,nst,tot1);
         while(si<line.size()&&check_una(si,line)){
-            puin(l1,cts(si),tot1);
+            puin(l1,cts(si,line),tot1);
             si++;
         }
     }
     for(int i=tot1-1;i>=0;i--)puin(l2,l1[i],tot2);
     while(tot2){
-    	for(int i=tot2-1;i>=0;i--)cout<<l2[i]<<endl;//
-        cout<<endl;//
+    	//for(int i=tot2-1;i>=0;i--)cout<<l2[i]<<endl;//
+        //cout<<endl;//
+        if(tq&&qq[tq].first>=tot2){
+        	iszk[qq[tq].second]=100007;
+        	tq--;
+        }
         string now=l2[tot2-1];
-        if(!check_name(now)){cout<<now<<endl<<endl;tot2--;continue;}
+        if(!check_name(now)){
+        	cout<<now;
+        	//cout<<endl<<endl;//
+        	tot2--;continue;
+        }
         bool isz=0;
         for(auto s1:def){
             string cname=s1.first,ccontent=s1.second.first;
             if(s1.second.second==0)continue;
             if(now==cname){
+            	//cout<<now<<":"<<iszk[now]<<endl;//
                 if(iszk[now]<tot2)continue;
-                cout<<now<<":"<<ccontent<<endl;
+                //cout<<now<<":"<<ccontent<<endl;//
                 iszk[now]=tot2-1;
+                qq[++tq]={tot2-1,now};
                 now=ccontent;
-                cout<<now<<endl;
+                //cout<<now<<endl<<endl;//
                 int ni=0;
                 tot1=0;
                 while(ni<now.size()){
                     string nst=getname(ni,now);
-                    cout<<nst<<endl;
+                    //cout<<nst<<endl;//
                     puin(l1,nst,tot1);
                     while(ni<now.size()&&check_una(ni,now)){
-                        puin(l1,cts(ni),tot1);
+                    	//cout<<cts(ni,now)<<endl;//
+                        puin(l1,cts(ni,now),tot1);
                         ni++;
                     }
                 }
-                cout<<l1[0]<<endl<<endl;
+                //cout<<endl;//
+                //cout<<l1[0]<<endl<<endl;//
                 tot2--;
                 for(int i=tot1-1;i>=0;i--)puin(l2,l1[i],tot2);
                 tot1=0;
@@ -107,7 +122,11 @@ void zk(){
                 break;
             }
         }
-        if(!isz){cout<<now<<endl<<endl;tot2--;}
+        if(!isz){
+        	cout<<now;
+        	//cout<<endl<<endl;//
+        	tot2--;
+        }
     }
 }
 int main(){
@@ -119,10 +138,10 @@ int main(){
         if(check_def()){cout<<"\n";continue;}
         if(check_udf()){cout<<"\n";continue;}
         zk();
-        for(auto st:iszk)st.second=1000;
+        for(auto st:def)iszk[st.first]=100007;
         cout<<"\n";
     }
-    for(auto st:def)cout<<st.first<<" "<<st.second.first<<" "<<st.second.second<<"\n";
+    //for(auto st:def)cout<<st.first<<" "<<st.second.first<<" "<<st.second.second<<"\n";//
     
     return 0;
 }
