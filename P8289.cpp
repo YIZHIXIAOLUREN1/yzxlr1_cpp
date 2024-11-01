@@ -5,8 +5,6 @@ int n;
 string line,base_def="#define",base_udf="#undef";
 map<string,pair<string,bool>> def;
 map<string,int> iszk;
-pair<int,string> qq[100007];
-int tq=0;
 
 string cts(int si,string &s){string res;res+=s[si];return res;}
 bool check_name(string &x){
@@ -79,10 +77,6 @@ void zk(){
     while(tot2){
     	//for(int i=tot2-1;i>=0;i--)cout<<l2[i]<<endl;//
         //cout<<endl;//
-        if(tq&&qq[tq].first>=tot2){
-        	iszk[qq[tq].second]=100007;
-        	tq--;
-        }
         string now=l2[tot2-1];
         if(!check_name(now)){
         	cout<<now;
@@ -98,7 +92,6 @@ void zk(){
                 if(iszk[now]<tot2)continue;
                 //cout<<now<<":"<<ccontent<<endl;//
                 iszk[now]=tot2-1;
-                qq[++tq]={tot2-1,now};
                 now=ccontent;
                 //cout<<now<<endl<<endl;//
                 int ni=0;
