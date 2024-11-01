@@ -5,6 +5,8 @@ int n;
 string line,base_def="#define",base_udf="#undef";
 map<string,pair<string,bool>> def;
 map<string,int> iszk;
+pair<int,string> qq[100007];
+int tq=0;
 
 string cts(int si,string &s){string res;res+=s[si];return res;}
 bool check_name(string &x){
@@ -48,9 +50,7 @@ bool check_udf(){
     for(int i=0;i<base_udf.size();i++)if(line[i]!=base_udf[i])return 0;
     string name,content;
     int ni=7;
-    while(line[ni]!=' '){name+=line[ni];ni++;}
-    ni++;
-    for(;ni<line.size();ni++)content+=line[ni];
+    while(ni<line.size()){name+=line[ni];ni++;}
     def[name]={def[name].first,0};
     return 1;
 }
@@ -77,6 +77,10 @@ void zk(){
     while(tot2){
     	//for(int i=tot2-1;i>=0;i--)cout<<l2[i]<<endl;//
         //cout<<endl;//
+        while(tq&&qq[tq].first>=tot2){
+        	iszk[qq[tq].second]=100007;
+        	tq--;
+        }
         string now=l2[tot2-1];
         if(!check_name(now)){
         	cout<<now;
@@ -92,6 +96,7 @@ void zk(){
                 if(iszk[now]<tot2)continue;
                 //cout<<now<<":"<<ccontent<<endl;//
                 iszk[now]=tot2-1;
+                qq[++tq]={tot2-1,now};
                 now=ccontent;
                 //cout<<now<<endl<<endl;//
                 int ni=0;
@@ -123,7 +128,7 @@ void zk(){
     }
 }
 int main(){
-    //ios::sync_with_stdio(0);cin.tie(0);
+    ios::sync_with_stdio(0);cin.tie(0);
     cin >> n;
     getline(cin,line);
     while(n--){

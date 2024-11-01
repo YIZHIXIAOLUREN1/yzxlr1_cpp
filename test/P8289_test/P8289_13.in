@@ -1,0 +1,6 @@
+5
+#define A abc
+#define B hij
+A B AB BA B A
+#undef A
+A B AB BA B A
