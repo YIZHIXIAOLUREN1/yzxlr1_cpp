@@ -44,8 +44,8 @@ ll solve(int c){
 }
 
 int main(){
-    freopen("arena.in","r",stdin);
-    freopen("arena.out","w",stdout);
+    //freopen("arena.in","r",stdin);
+    //freopen("arena.out","w",stdout);
     ios::sync_with_stdio(0);cin.tie(0);
     cin >> n >> m;
     for(int i=1;i<=n;i++)cin >> sa[i];
