@@ -20,11 +20,13 @@ int main(){
         cin>>n;
         for(int i=1;i<=n;i++){cin>>a[i];b[i]=a[i];}
         sort(b+1,b+n+1);
-        int cmp=unique(b+1,b+n+1)-b;
+        int cmp=unique(b+1,b+n+1)-b-1;
+        //cout<<cmp<<"\n";//
         for(int i=1;i<=n;i++){
             a[i]=lower_bound(b+1,b+cmp+1,a[i])-b;
+            //printf("%d:%d\n",i,a[i]);//
             ms[i]=inf;
-            s[i]=C(i,i-1);
+            s[i]=s[i-1]+C(i,i-1);
         }
         //memset(f,0,sizeof(f));
         //memset(g,0,sizeof(g));
@@ -35,6 +37,8 @@ int main(){
             f[i]=s[i]+max(1ll*0,max(mf,ms[a[i+1]]+b[a[i+1]]));
             mf=max(mf,f[i]-s[i+1]);
             ms[a[i]]=max(ms[a[i]],f[i]-s[i+1]);
+            //printf("%d:%lld %lld %lld:%d %lld\n",
+            //i,f[i],s[i],mf,a[i],ms[a[i]]);//
         }
 		f[n]=s[n]+mf;
         cout<<f[n]<<"\n";
