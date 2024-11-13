@@ -1,12 +1,13 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define ll long long
-const int N=2e5+7,mod=998244353;
-ll f[2][N],g[2][N];
-ll pf[2][N],pg[2][N];
-int n,a[N];
+const int N=2e5+7;
+const ll inf=0xc0c0c0c0c0c0c0c0;
+ll f[N],s[N];
+ll mf,ms[N];
+int n,a[N],b[N];
 
-int C(int x,int y){return (a[x]==a[y])*a[x];}
+int C(int x,int y){return (b[a[x]]==b[a[y]])*b[a[x]];}
 
 int main(){
     //freopen("color.in","r",stdin);
@@ -15,33 +16,27 @@ int main(){
     int T;
     cin>>T;
     while(T--){
+        ll ans=0;
         cin>>n;
-        for(int i=1;i<=n;i++)cin>>a[i];
+        for(int i=1;i<=n;i++){cin>>a[i];b[i]=a[i];}
+        sort(b+1,b+n+1);
+        int cmp=unique(b+1,b+n+1)-b;
+        for(int i=1;i<=n;i++){
+            a[i]=lower_bound(b+1,b+cmp+1,a[i])-b;
+            ms[i]=inf;
+            s[i]=C(i,i-1);
+        }
         //memset(f,0,sizeof(f));
         //memset(g,0,sizeof(g));
-        //memset(pf,0,sizeof(pf));
-        //memset(pg,0,sizeof(pg));
-
-        for(int i=0;i<=1;i++)
-        for(int j=0;j<=2;j++)f[i][j]=g[i][j]=pf[i][j]=pg[i][j]=0;
-
-        for(int i=2;i<=n;i++){
-            int li=i%2,ni=(i%2)^1;
-            for(int j=1;j<i;j++){
-                if(j==i-1){
-                    f[ni][j]=max(pf[li][i-2],pg[li][i-1])+C(i,j);
-                    g[ni][j]=g[li][i-1]+C(i,j);
-                }else{
-                    f[ni][j]=g[li][j+1]+C(i,j);
-                    g[ni][j]=g[li][j]+C(i,i-1);
-                }
-                pf[ni][j]=max(pf[ni][j-1],f[ni][j]);
-                pg[ni][j]=max(pg[ni][j-1],g[ni][j]);
-            }
-            g[ni][i]=pf[ni][i-2];
+        f[0]=f[1]=s[1]=s[0]=0;
+        mf=0;
+        ms[a[1]]=0;
+        for(int i=2;i<n;i++){
+            f[i]=s[i]+max(1ll*0,max(mf,ms[a[i+1]]+b[a[i+1]]));
+            mf=max(mf,f[i]-s[i+1]);
+            ms[a[i]]=max(ms[a[i]],f[i]-s[i+1]);
         }
-        ll ans=0,ni=(n%2)^1;
-        ans=max(pf[ni][n-1],pg[ni][n-1]);
-        cout<<ans<<"\n";
+		f[n]=s[n]+mf;
+        cout<<f[n]<<"\n";
     }
 }

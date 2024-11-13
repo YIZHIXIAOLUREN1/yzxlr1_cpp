@@ -16,7 +16,7 @@ void sc(){
 }
 
 ll solve(int c){
-    int k=1;
+    int k=0;
     ll ans=0;
     while((1<<k)<c)k++;
     for(int i=1;i<=c;i++)b[i]=a[i];
@@ -26,7 +26,7 @@ ll solve(int c){
     for(int i=1;i<=k;i++){
         for(int j=1;j<=1<<(k-i);j++){
             int xi=2*j-1,yi=2*j;
-            if(b[yi]!=-1){
+            if(b[xi]!=-1&&b[yi]!=-1){
                 if(RG[j][i]==1&&b[yi]>=i||RG[j][i]==0&&b[xi]<i){b[j]=b[yi];bb[j]=bb[yi];}
                 else {b[j]=b[xi];bb[j]=bb[xi];}
             }else if(b[xi]!=-1){
@@ -36,15 +36,15 @@ ll solve(int c){
             }else{
                 b[j]=-1;bb[j]=bb[xi]+bb[yi];
             }
-            //printf("%d %d:%d %d\n",i,j,b[j],bb[j]);//
+            printf("%d %d:%d %d\n",i,j,b[j],bb[j]);//
         }
     }
-    //cout<<bb[1]<<endl;//
+    cout<<bb[1]<<endl;//
     return bb[1];
 }
 
 int main(){
-    //freopen("arena.in","r",stdin);
+    freopen("arena1.in","r",stdin);
     //freopen("arena.out","w",stdout);
     ios::sync_with_stdio(0);cin.tie(0);
     cin >> n >> m;
@@ -68,6 +68,4 @@ int main(){
         }
         cout<<ans<<"\n";
     }
-
-
 }
