@@ -22,8 +22,8 @@ void dfs1(int u){
 }
 
 void dfs2(int u,int topp){
-    dfn[u]=tot;
-    ran[++tot]=u;
+    dfn[u]=++tot;
+    ran[tot]=u;
     top[u]=topp;
     if(son[u])dfs2(son[u],topp);
     for(auto v:G[u]){
@@ -36,6 +36,7 @@ void dcg(int u,int l,int r,int x,int dx){
     if(l==r){W[u]+=dx;return;}
     else if(x<=mid)dcg(ls,l,mid,x,dx);
     else dcg(rs,mid+1,r,x,dx);
+    pushup(u);
 }
 
 int qu(int u,int l,int r,int L,int R){
@@ -51,10 +52,12 @@ pair<int,int> cx(int x,int y){
         res1+=d[x]-d[fa[top[x]]];
         res2+=qu(1,1,n,dfn[top[x]],dfn[x]);
         x=fa[top[x]];
+        printf("%d %d:%d %d\n",x,y,res1,res2);//
     }
     if(d[x]<d[y])swap(x,y);
     res1+=d[x]-d[y]+1;
     res2+=qu(1,1,n,dfn[x],dfn[y]);
+    printf("%d %d:%d %d\n",x,y,res1,res2);//
     return {res1,res2};
 }
 
@@ -63,14 +66,18 @@ struct node2{
 }cg[N];
 struct node{
     int L;int R;
-    int mi;
+    int i;int c;
+    int res1,res2;
 }qq[N];
 int totc,totq;
 bool cmp1(node x,node y){
-    return x.mi<y.mi;
+    return (x.i-x.c+1)<(y.i-y.c+1);
+}
+bool cmp2(node x,node y){
+	return x.i<y.i;
 }
 int main(){
-    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    //ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     cin >> n;
     for(int i=1,ffa;i<=n;i++){
         cin >> ffa;
@@ -79,23 +86,43 @@ int main(){
     }
     dfs1(root);
     dfs2(root,root);
+    for(int i=1;i<=n;i++)
+    printf("%d:%d %d %d %d\n",i,dfn[i],siz[i],d[i],top[i]);//
+    cin>>Q;
     for(int i=1;i<=Q;i++){
         int md,x,y,c;
         cin>>md;
-        if(md==1){cin>>x>>y>>c;qq[++totq]=(node){x,y,i-c+1};}
-        else{cin>>x;cg[++totc]=(node2){x,i};}
+        if(md==1){
+        	cin>>x>>y>>c;
+        	++totq;
+        	qq[totq].L=x;
+        	qq[totq].R=y;
+        	qq[totq].i=i;
+        	qq[totq].c=c;
+        }
+        else{
+        	cin>>x;
+        	++totc;
+        	cg[totc].x=x;
+        	cg[totc].dx=i;
+        }
     }
-
+    //cout<<totc<<totq<<"\n";//
     sort(qq+1,qq+totq+1,cmp1);
-
+    for(int i=1;i<=totq;i++)//
+    printf("%d:%d %d %d\n",i,qq[i].L,qq[i].R,qq[i].i-qq[i].c+1);//
     int j=0;
     for(int i=1;i<=totq;i++){
-        while(j<totc&&cg[j+1].dx<qq[i].mi){
+        while(j<totc&&cg[j+1].dx<qq[i].i&&cg[j+1].dx<qq[i].i-qq[i].c+1){
             j++;dcg(1,1,n,dfn[cg[j].x],1);
         }
+        printf("%d:%d\n",i,j);//
         pair<int,int> res=cx(qq[i].L,qq[i].R);
-        cout<<res.first<<" "<<res.second<<" \n";
+        qq[i].res1=res.first,qq[i].res2=res.second;
+        //cout<<res.first<<" "<<res.second<<" \n";
     }
-
+    
+	sort(qq+1,qq+totq+1,cmp2);
+	for(int i=1;i<=totq;i++)cout<<qq[i].res1<<" "<<qq[i].res2<<" \n";
     return 0;
 }
