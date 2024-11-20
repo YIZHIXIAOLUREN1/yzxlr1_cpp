@@ -51,13 +51,13 @@ pair<int,int> cx(int x,int y){
         if(d[top[x]]<d[top[y]])swap(x,y);
         res1+=d[x]-d[fa[top[x]]];
         res2+=qu(1,1,n,dfn[top[x]],dfn[x]);
+        //printf("%d %d %d:%d %d:%d %d\n",x,y,fa[top[x]],dfn[top[x]],dfn[x],res1,res2);//
         x=fa[top[x]];
-        printf("%d %d:%d %d\n",x,y,res1,res2);//
     }
     if(d[x]<d[y])swap(x,y);
     res1+=d[x]-d[y]+1;
-    res2+=qu(1,1,n,dfn[x],dfn[y]);
-    printf("%d %d:%d %d\n",x,y,res1,res2);//
+    res2+=qu(1,1,n,dfn[y],dfn[x]);
+    //printf("%d %d:%d %d:%d %d\n",x,y,dfn[y],dfn[x],res1,res2);//
     return {res1,res2};
 }
 
@@ -71,11 +71,12 @@ struct node{
 }qq[N];
 int totc,totq;
 bool cmp1(node x,node y){
-    return (x.i-x.c+1)<(y.i-y.c+1);
+    return (x.i-x.c-1)<(y.i-y.c-1);
 }
 bool cmp2(node x,node y){
 	return x.i<y.i;
 }
+//void showtree(){for(int i=1;i<=4*n;i++)cout<<W[i]<<" \n"[i==4*n];//}
 int main(){
     //ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     cin >> n;
@@ -86,8 +87,8 @@ int main(){
     }
     dfs1(root);
     dfs2(root,root);
-    for(int i=1;i<=n;i++)
-    printf("%d:%d %d %d %d\n",i,dfn[i],siz[i],d[i],top[i]);//
+    //for(int i=1;i<=n;i++)//
+    //printf("%d:%d %d %d %d\n",i,dfn[i],siz[i],d[i],top[i]);//
     cin>>Q;
     for(int i=1;i<=Q;i++){
         int md,x,y,c;
@@ -109,14 +110,16 @@ int main(){
     }
     //cout<<totc<<totq<<"\n";//
     sort(qq+1,qq+totq+1,cmp1);
-    for(int i=1;i<=totq;i++)//
-    printf("%d:%d %d %d\n",i,qq[i].L,qq[i].R,qq[i].i-qq[i].c+1);//
+    //for(int i=1;i<=totq;i++)//
+    //printf("%d:%d %d %d\n",i,qq[i].L,qq[i].R,qq[i].i-qq[i].c-1);//
     int j=0;
+    //for(int i=1;i<=4*n;i++)cout<<i<<" \n"[i==4*n];//
     for(int i=1;i<=totq;i++){
-        while(j<totc&&cg[j+1].dx<qq[i].i&&cg[j+1].dx<qq[i].i-qq[i].c+1){
+        while(j<totc&&cg[j+1].dx<qq[i].i&&cg[j+1].dx<=qq[i].i-qq[i].c-1){
             j++;dcg(1,1,n,dfn[cg[j].x],1);
+            //showtree();//
         }
-        printf("%d:%d\n",i,j);//
+        //printf("%d:%d\n",i,j);//
         pair<int,int> res=cx(qq[i].L,qq[i].R);
         qq[i].res1=res.first,qq[i].res2=res.second;
         //cout<<res.first<<" "<<res.second<<" \n";
