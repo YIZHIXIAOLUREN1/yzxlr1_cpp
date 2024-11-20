@@ -78,7 +78,7 @@ bool cmp2(node x,node y){
 }
 //void showtree(){for(int i=1;i<=4*n;i++)cout<<W[i]<<" \n"[i==4*n];//}
 int main(){
-    //ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     cin >> n;
     for(int i=1,ffa;i<=n;i++){
         cin >> ffa;
