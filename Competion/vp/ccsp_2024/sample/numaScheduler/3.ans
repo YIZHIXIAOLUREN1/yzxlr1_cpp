@@ -1,0 +1,12 @@
+Process (PID): 1 Thread(Tid): 1 Load: 20
+Process (PID): 1 Thread(Tid): 3 Load: 20
+Process (PID): 2 Thread(Tid): 2 Load: 30
+Contention Cost: 12
+Process (PID): 1 Thread(Tid): 1 Load: 20
+Process (PID): 1 Thread(Tid): 3 Load: 20
+Process (PID): 2 Thread(Tid): 2 Load: 30
+Contention Cost: 11
+Process (PID): 1 Thread(Tid): 1 Load: 20
+Process (PID): 1 Thread(Tid): 3 Load: 20
+Process (PID): 2 Thread(Tid): 2 Load: 30
+Contention Cost: 22

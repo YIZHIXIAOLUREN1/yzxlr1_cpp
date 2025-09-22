@@ -1,0 +1,5 @@
+Process (PID): 1 Thread(Tid): 1 Load: 20
+Process (PID): 2 Thread(Tid): 2 Load: 30
+Contention Cost: 0
+Process (PID): 2 Thread(Tid): 2 Load: 30
+Contention Cost: 0
