@@ -41,6 +41,7 @@ void dd(db x){
 
 int main(){
     //ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    freopen("1.in","r",stdin);
     int T;
     cin>>T;
     while(T--){
