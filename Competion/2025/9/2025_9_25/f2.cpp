@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
+#define int long long
 #define ll long long
 const int N=1e5+7;
 int h,d;
@@ -11,7 +12,7 @@ bool check(int k){
     return 1ll*h+k-d>res1;
 }
 
-int main(){
+signed main(){
     //ios::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     int T;
     cin>>T;
