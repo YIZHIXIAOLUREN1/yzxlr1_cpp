@@ -36,8 +36,7 @@ LL qmi(LL m,LL k,int p)
     return ans;
 }
 int pre[N];
-LL pp[N][N];
-LL pk[N];
+LL pp[N][N][N];
 void solve()
 {
     int n,q;
@@ -80,32 +79,37 @@ void solve()
     }
 
     for(int a=0;a<=n-pre[n];a++){
-        pp[a][0]=(f[n][0][a][0]+f[n][1][a][0]+f[n][2][a][0])%mod;
-        for(int b=1;b<=n-pre[n];b++){
-            pp[a][b]=(f[n][0][a][b]+f[n][1][a][b]+f[n][2][a][b]+pp[a][b-1])%mod;
-            //printf("%d %d:%lld\n",a,b,pp[a][b]);//
+        for(int b=0;b<=n-pre[n]-a;b++){
+                pp[a][b][n-pre[n]-a-b]=(f[n][0][a][b]+f[n][1][a][b]+f[n][2][a][b])%mod;
+        }
+    }
+    for(int a=0;a<=n-pre[n];a++){
+        for(int b=0;b<=n-pre[n];b++){
+            for(int c=1;c<=n-pre[n];c++){
+                pp[a][b][c]=(pp[a][b][c]+pp[a][b][c-1])%mod;
+            }
+        }
+    }
+    for(int a=0;a<=n-pre[n];a++){
+        for(int c=0;c<=n-pre[n];c++){
+            for(int b=1;b<=n-pre[n];b++){
+                pp[a][b][c]=(pp[a][b][c]+pp[a][b-1][c])%mod;
+            }
         }
     }
     for(int b=0;b<=n-pre[n];b++){
-        for(int a=1;a<=n-pre[n];a++){
-            pp[a][b]=(pp[a][b]+pp[a-1][b])%mod;
-            
+        for(int c=0;c<=n-pre[n];c++){
+            for(int a=1;a<=n-pre[n];a++){
+                pp[a][b][c]=(pp[a][b][c]+pp[a-1][b][c])%mod;
+            }
         }
     }
-    // for(int a=0;a<=n-pre[n];a++)
-    // for(int b=0;b<=n-pre[n];b++)
-    // printf("%d %d:%lld\n",a,b,(f[n][0][a][b]+f[n][1][a][b]+f[n][2][a][b])%mod);//
-    // cout<<"E\n";//
-    // for(int a=0;a<=n-pre[n];a++)
-    // for(int b=0;b<=n-pre[n];b++)
-    // printf("%d %d:%lld\n",a,b,pp[a][b]);//
-    for(int k=0;k<=n-pre[n];k++){
-        if(k)pk[k]=pk[k-1];
-        for(int a=0;a<=k;a++){
-            int b=k-a;
-            pk[k]=(pk[k]+f[n][0][a][b]+f[n][1][a][b]+f[n][2][a][b])%mod;
+    for(int a=0;a<=n-pre[n];a++){
+        for(int b=0;b<=n-pre[n];b++){
+            for(int c=0;c<=n-pre[n];c++){
+                //printf("%d %d %d:%lld %lld\n",a,b,c,(f[n][0][a][b]+f[n][1][a][b]+f[n][2][a][b])%mod,pp[a][b][c]);//
+            }
         }
-        //printf("%d:%lld\n",k,pk[k]);//
     }
 
     while(q--){
@@ -113,14 +117,8 @@ void solve()
         cin>>qa>>qb>>qc;
         qa=min(qa,n-pre[n]);
         qb=min(qb,n-pre[n]);
-        qc=max(0,n-pre[n]-qc-1);
-        LL ans=((pp[qa][qb]-pk[qc])%mod+mod)%mod;
-        for(int a=0;a<=qc;a++){
-        	for(int b=(a<=qa)?qb+1:0;b<=qc-a;b++){
-        		ans=(ans+(f[n][0][a][b]+f[n][1][a][b]+f[n][2][a][b]))%mod;
-        	}
-        }
-        cout<<ans%mod<<"\n";
+        qc=min(qc,n-pre[n]);
+        cout<<pp[qa][qb][qc]%mod<<"\n";
     }
 }
 int main()
