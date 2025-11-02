@@ -5,6 +5,7 @@ const int N=1e6+7;
 int n,Q;
 int a[N];
 ll pre[N];
+//prefix
 
 int main(){
     cin>>n>>Q;
@@ -18,3 +19,8 @@ int main(){
         cout<<pre[r]-pre[l-1]<<"\n";
     }
 }
+/*
+pre[1]=a[1]+pre[0]
+
+
+*/
