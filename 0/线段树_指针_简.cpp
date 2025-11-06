@@ -13,9 +13,9 @@ struct node{
     node(node *_node){val=_node->val,l=_node->l,r=_node->r;}
     void pushup(){
         if(l==r)return;
-        val=ch[0]->val+ch[1]->val;
+        val=(!ch[0]?0:ch[0]->val)+(!ch[1]?0:ch[1]->val);
     }
-}*root1,*root2;
+}*root1;
 
 void build(node *cur){
     if(cur->l==cur->r){return;}
