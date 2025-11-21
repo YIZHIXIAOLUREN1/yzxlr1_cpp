@@ -1,26 +1,20 @@
 #include <stdio.h>
 
-int main()
+#define M 100
+
+void fun(int m, int *a, int *n)
 {
-    int a[12], i, n = 12;
-    float av = 0;
+    *n=0;
+    for(int i=1;i<=m;i++)
+        if(i%7==0||i%11==0)
+            a[++*n]=i;
+}
 
-    for (i = 0; i < n; i++)
-        scanf("%d", &a[i]);
-
-    for (i = 0; i < n; i++)
-    {
-        printf("%d", a[i]);
-        if ((i + 1) % 3 == 0)
-            printf("\n");
-        else
-            printf(" ");
-    }
-
-    for (i = 0; i < n; i++)
-        av += a[i];
-
-    av = av / n;
-    printf("av=%f\n", av);
-    return 0;
+int main()
+{  int aa[M], n, k;
+   fun(50, aa, &n);
+   for(k=1;k<=n;k++)
+     if(k%20==0) printf("\n");
+     else printf("%4d", aa[k]);
+   printf("\n");
 }
