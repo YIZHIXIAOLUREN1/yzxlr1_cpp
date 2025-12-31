@@ -24,10 +24,11 @@ void Solve(){
 		string s;
 		cin>>s;
 		//vis[st[s]]=1;
-		ansm=min(anss,as[st[s]]);
+		ansm=min(ansm,as[st[s]]);
 	}
-	if(1ll*ansm*p<sum){cout<<"-1\n";return;}
-	anss=((sum-1)/p+1);
+    anss=((sum-1)/p+1);
+	if(anss>ansm||p<k){cout<<"-1\n";return;}
+	
 	cout<<anss<<" "<<ansm<<"\n";
 }
 
