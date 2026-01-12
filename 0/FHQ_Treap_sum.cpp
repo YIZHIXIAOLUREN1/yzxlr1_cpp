@@ -13,10 +13,9 @@ struct node{
     node (int _val):val(_val),cnt(1),siz(1),prio(rnd()),sum(_val){ch[0]=ch[1]=nullptr;}
     node(node *_node){val=_node->val,prio=_node->prio,cnt=_node->cnt,siz=_node->siz,sum=_node->sum;}
     void upd_siz(){
-        siz = cnt;
-        sum = (ll)val * cnt;
-        if(ch[0]) siz += ch[0]->siz, sum += ch[0]->sum;
-        if(ch[1]) siz += ch[1]->siz, sum += ch[1]->sum;
+        sum=1ll*val*(siz=cnt);
+        siz+=(!ch[0]?0:ch[0]->siz)+(!ch[1]?0:ch[1]->siz);
+        sum+=(!ch[0]?0:ch[0]->sum)+(!ch[1]?0:ch[1]->sum);
     }
 } *root;
 
