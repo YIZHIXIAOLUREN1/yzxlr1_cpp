@@ -25,3 +25,8 @@ for i in range(Q):
     # 计算区间和
     result = pre[r] - pre[l-1]
     print(result)
+
+
+#powered by deepseek
+#不知道需要什么东西的时候，就去学，要用到什么，你就学什么
+#你已经不需要从互联网大海捞针，你可以问ai

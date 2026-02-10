@@ -23,7 +23,8 @@ void generate_test_case(int test_id, int max_n, int max_q, int max_value) {
     fout << n << " " << q << "\n";
     
     // 生成n个正整数
-    for (int i = 0; i < n; i++) {
+    fout<<"0 ";
+    for (int i = 1; i < n; i++) {
         int a_i = uniform_int_distribution<int>(0, max_value)(gen);
         fout << a_i;
         if (i < n - 1) fout << " ";
@@ -31,12 +32,12 @@ void generate_test_case(int test_id, int max_n, int max_q, int max_value) {
     fout << "\n";
     
     // 生成q个查询
-    for (int i = 0; i < q; i++) {
-        int l = uniform_int_distribution<int>(1, n)(gen);
-        int r = uniform_int_distribution<int>(l, n)(gen);
-        fout << l << " " << r << "\n";
+    for (int i = 0; i < q-1; i++) {
+        int len = uniform_int_distribution<int>(0.8*n, n)(gen);
+        int l = uniform_int_distribution<int>(1, n-len+1)(gen);
+        fout << l << " " << l+len-1 << "\n";
     }
-    
+    fout<<"1 1\n";
     fout.close();
     cout << "生成测试点: " << filename << " (n=" << n << ", q=" << q << ")" << "\n";
 }
