@@ -29,7 +29,7 @@ pair<node *,node *> split_val(node *cur,int val){
         return {temp.first,now};
     }
 }
-
+/*
 tuple<node *,node *,node *> split_rk(node *cur,int rk){
     if(cur==nullptr)return {nullptr,nullptr,nullptr};
     node *now=new node(cur);
@@ -50,7 +50,7 @@ tuple<node *,node *,node *> split_rk(node *cur,int rk){
         return {now,mid,r};
     }
 }
-
+*/
 node *merge(node *u,node *v){
     if(u==nullptr&&v==nullptr)return nullptr;
     if(v==nullptr)return u;
@@ -111,15 +111,19 @@ int qrk_rk(node *cur,int rk){
 }
 
 int qpre(node *cur,int val){
-    int rk=qrk_val(cur,val);
-    if(!rk)return -inf;
-    return qrk_rk(cur,rk);
+    int res=-inf;
+    while(cur)
+        if(cur->val<val)res=cur->val,cur=cur->ch[1];
+        else cur = cur->ch[0];
+    return res;
 }
 
 int qnex(node *cur,int val){
-    int rk=qrk_val(cur,val+1);
-    if(rk==cur->siz)return inf;
-    return qrk_rk(cur,rk+1);
+    int res=inf;
+    while(cur)
+        if(cur->val>val)res=cur->val,cur=cur->ch[0];
+        else cur = cur->ch[1];
+    return res;
 }
 
 int main(){
@@ -137,6 +141,5 @@ int main(){
             case 6:cout<<qnex(root[ver],x)<<"\n";break;
         }
         if(opt>=3)root[i]=root[ver];
-        root[i]=root[i];
     }
 }
